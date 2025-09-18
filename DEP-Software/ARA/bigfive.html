@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teste de Personalidade - Big Five</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --dark-blue: #0d1b4e;
+      --dark-blue-light: #1e3a8a;
+      --dark-blue-lighter: #1e3a6a;
+      --accent-blue: #2d4fc6;
+      --light-bg: #f8f9fa;
+      --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      
+      --openness: #4e73df;
+      --conscientiousness: #1cc88a;
+      --extroversion: #f6c23e;
+      --agreeableness: #36b9cc;
+      --neuroticism: #e74a3b;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light-bg);
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, var(--dark-blue) 0%, var(--dark-blue-light) 100%);
+      color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .progress-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .progress {
+      height: 12px;
+      background-color: #e9ecef;
+      border-radius: 6px;
+    }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, var(--dark-blue-light), var(--accent-blue));
+      transition: width 0.6s ease;
+    }
+    
+    .question-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-left: 4px solid var(--dark-blue-light);
+    }
+    
+    .question-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(10, 25, 47, 0.2);
+    }
+    
+    .likert-scale {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+    
+    .likert-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+    
+    .likert-option input {
+      margin-bottom: 0.5rem;
+    }
+    
+    .likert-label {
+      font-size: 0.85rem;
+      text-align: center;
+      color: #6c757d;
+    }
+    
+    .btn-primary {
+      background-color: var(--dark-blue);
+      border-color: var(--dark-blue);
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--dark-blue-light);
+      border-color: var(--dark-blue-light);
+    }
+    
+    .btn-outline-secondary {
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+    }
+    
+    .btn-success {
+      background-color: #25D366;
+      border-color: #25D366;
+    }
+    
+    .btn-success:hover {
+      background-color: #128C7E;
+      border-color: #128C7E;
+    }
+    
+    .result-container {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--card-shadow);
+      animation: fadeIn 0.8s ease;
+    }
+    
+    .trait-card {
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+    
+    .trait-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .openness-card {
+      background: linear-gradient(135deg, var(--openness), #2c4fbe);
+    }
+    
+    .conscientiousness-card {
+      background: linear-gradient(135deg, var(--conscientiousness), #149466);
+    }
+    
+    .extroversion-card {
+      background: linear-gradient(135deg, var(--extroversion), #d6a415);
+    }
+    
+    .agreeableness-card {
+      background: linear-gradient(135deg, var(--agreeableness), #238a9b);
+    }
+    
+    .neuroticism-card {
+      background: linear-gradient(135deg, var(--neuroticism), #be2617);
+    }
+    
+    .dominant-badge {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      background: linear-gradient(135deg, var(--dark-blue-light), var(--accent-blue));
+      color: white;
+      font-weight: 600;
+    }
+    
+    .chart-container {
+      height: 300px;
+      margin: 2rem 0;
+    }
+    
+    .trait-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    
+    .trait-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .trait-list li:last-child {
+      border-bottom: none;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .floating-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 99;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      animation: pulse 2s infinite;
+      background-color: var(--dark-blue);
+      border-color: var(--dark-blue);
+    }
+    
+    .floating-btn:hover {
+      background-color: var(--dark-blue-light);
+      border-color: var(--dark-blue-light);
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    @media (max-width: 768px) {
+      .header {
+        padding: 1.5rem;
+      }
+      
+      .question-card, .result-container {
+        padding: 1.25rem;
+      }
+      
+      .trait-card {
+        padding: 1rem;
+      }
+      
+      .likert-scale {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .likert-option {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    }
+
+    .info-box {
+      background-color: #e9f7fe;
+      border-left: 4px solid var(--accent-blue);
+      padding: 1rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+    
+    .share-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  
+ <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: var(--dark-blue);">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-stars me-2"></i>ARA Academia
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="bi bi-clipboard-check me-2"></i>Testes
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="temperamento.html">
+                  <i class="bi bi-emoji-smile me-2"></i>Teste de Temperamento
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="DISC.html">
+                  <i class="bi bi-person-lines-fill me-2"></i>Perfil Comportamental
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="bigfive.html">
+                  <i class="bi bi-bar-chart-steps me-2"></i>Teste de Big Five
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="comunicacao.html">
+                  <i class="bi bi-chat-dots-fill me-2"></i>Estilo de Comunicação
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="amor.html">
+                  <i class="bi bi-heart-fill me-2"></i>Linguagem do Amor
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <div class="header text-center">
+      <h1 class="fw-bold mb-3">Teste de Personalidade Big Five</h1>
+      <p class="mb-0">Descubra seus traços de personalidade baseados no modelo dos Cinco Grandes Fatores</p>
+    </div>
+
+    <div class="progress-container">
+      <div class="d-flex justify-content-between mb-2">
+        <span>Progresso</span>
+        <span id="progressText">0%</span>
+      </div>
+      <div class="progress">
+        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <form id="quizForm">
+      <div id="questions"></div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-outline-secondary" id="prevBtn" disabled>
+          <i class="bi bi-arrow-left"></i> Anterior
+        </button>
+        <button type="button" class="btn btn-primary" id="nextBtn">
+          Próximo <i class="bi bi-arrow-right"></i>
+        </button>
+        <button type="submit" class="btn btn-success hidden" id="submitBtn">
+          <i class="bi bi-check-circle"></i> Ver Resultados
+        </button>
+      </div>
+    </form>
+
+    <div id="result" class="result-container hidden">
+      <!-- Result content will be inserted here -->
+    </div>
+  </div>
+
+  <!-- Floating button for quick navigation -->
+  <button id="floatingBtn" class="floating-btn btn btn-primary hidden">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Chart.js for results visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.min.js"></script>
+
+  <script>
+    const questions = [
+      { text: "Sou alguém que é comunicativo e tagarela", factor: "extroversion", reversed: false },
+      { text: "Tendo a ser crítico e rude com os outros", factor: "agreeableness", reversed: true },
+      { text: "Sempre me preparo cuidadosamente", factor: "conscientiousness", reversed: false },
+      { text: "Sou propenso a stress e me preocupo com muitas coisas", factor: "neuroticism", reversed: false },
+      { text: "Tenho um vocabulário extenso", factor: "openness", reversed: false },
+      { text: "Não falo muito", factor: "extroversion", reversed: true },
+      { text: "Tenho interesse pelas outras pessoas", factor: "agreeableness", reversed: false },
+      { text: "Deixo minhas coisas espalhadas", factor: "conscientiousness", reversed: true },
+      { text: "Me sinto confortável comigo mesmo", factor: "neuroticism", reversed: true },
+      { text: "Tenho dificuldade para entender ideias abstratas", factor: "openness", reversed: true },
+      { text: "Sinto-me confortável perto de pessoas", factor: "extroversion", reversed: false },
+      { text: "Insulto outras pessoas", factor: "agreeableness", reversed: true },
+      { text: "Atento aos detalhes", factor: "conscientiousness", reversed: false },
+      { text: "Me preocupo com as coisas", factor: "neuroticism", reversed: false },
+      { text: "Tenho uma imaginação vívida", factor: "openness", reversed: false },
+      { text: "Gosto de ficar em segundo plano", factor: "extroversion", reversed: true },
+      { text: "Tenho simpatia pelos outros", factor: "agreeableness", reversed: false },
+      { text: "Frequentemente esqueço de colocar as coisas de volta no lugar", factor: "conscientiousness", reversed: true },
+      { text: "Raramente fico triste", factor: "neuroticism", reversed: true },
+      { text: "Não estou interessado em ideias abstratas", factor: "openness", reversed: true }
+    ];
+
+    const questionsDiv = document.getElementById('questions');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const floatingBtn = document.getElementById('floatingBtn');
+    const resultDiv = document.getElementById('result');
+    const quizForm = document.getElementById('quizForm');
+
+    let currentPage = 0;
+    const questionsPerPage = 4;
+    let answers = Array(questions.length).fill(null);
+    let currentResults = null;
+
+    function renderQuestions() {
+      questionsDiv.innerHTML = '';
+      const start = currentPage * questionsPerPage;
+      const end = Math.min(start + questionsPerPage, questions.length);
+
+      for (let i = start; i < end; i++) {
+        const q = questions[i];
+        const value = answers[i];
+        
+        questionsDiv.innerHTML += `
+          <div class="question-card">
+            <h5 class="fw-semibold mb-3">${i + 1}. ${q.text}</h5>
+            <div class="likert-scale">
+              <div class="likert-option">
+                <input type="radio" name="q${i}" id="q${i}-1" value="1" ${value === 1 ? 'checked' : ''} required>
+                <label class="likert-label" for="q${i}-1">Discordo<br>Totalmente</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" name="q${i}" id="q${i}-2" value="2" ${value === 2 ? 'checked' : ''}>
+                <label class="likert-label" for="q${i}-2">Discordo<br>Parcialmente</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" name="q${i}" id="q${i}-3" value="3" ${value === 3 ? 'checked' : ''}>
+                <label class="likert-label" for="q${i}-3">Neutro</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" name="q${i}" id="q${i}-4" value="4" ${value === 4 ? 'checked' : ''}>
+                <label class="likert-label" for="q${i}-4">Concordo<br>Parcialmente</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" name="q${i}" id="q${i}-5" value="5" ${value === 5 ? 'checked' : ''}>
+                <label class="likert-label" for="q${i}-5">Concordo<br>Totalmente</label>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      updateProgress();
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.classList.toggle('hidden', end === questions.length);
+      submitBtn.classList.toggle('hidden', end !== questions.length);
+    }
+
+    function updateProgress() {
+      const totalPages = Math.ceil(questions.length / questionsPerPage);
+      const progress = ((currentPage + 1) / totalPages) * 100;
+      progressBar.style.width = progress + '%';
+      progressText.textContent = Math.round(progress) + '% completado';
+    }
+
+    function savePageAnswers() {
+      const start = currentPage * questionsPerPage;
+      const end = Math.min(start + questionsPerPage, questions.length);
+
+      for (let i = start; i < end; i++) {
+        const checkedRadio = document.querySelector(`input[name="q${i}"]:checked`);
+        if (checkedRadio) {
+          answers[i] = parseInt(checkedRadio.value);
+        }
+      }
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (validatePage()) {
+        savePageAnswers();
+        currentPage++;
+        renderQuestions();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      savePageAnswers();
+      currentPage--;
+      renderQuestions();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    function validatePage() {
+      const start = currentPage * questionsPerPage;
+      const end = Math.min(start + questionsPerPage, questions.length);
+
+      for (let i = start; i < end; i++) {
+        const radios = document.getElementsByName(`q${i}`);
+        if (![...radios].some(r => r.checked)) {
+          alert('Por favor, responda todas as perguntas desta página antes de continuar.');
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function calculateScores() {
+      let scores = { 
+        openness: 0, 
+        conscientiousness: 0, 
+        extroversion: 0, 
+        agreeableness: 0, 
+        neuroticism: 0 
+      };
+      
+      let counts = {
+        openness: 0,
+        conscientiousness: 0,
+        extroversion: 0,
+        agreeableness: 0,
+        neuroticism: 0
+      };
+
+      questions.forEach((q, index) => {
+        if (answers[index] !== null) {
+          let value = answers[index];
+          if (q.reversed) {
+            value = 6 - value; // Inverte a escala (1->5, 2->4, etc.)
+          }
+          scores[q.factor] += value;
+          counts[q.factor]++;
+        }
+      });
+
+      // Calcula a média para cada fator
+      const percentages = {};
+      for (let factor in scores) {
+        if (counts[factor] > 0) {
+          scores[factor] = scores[factor] / counts[factor];
+          percentages[factor] = ((scores[factor] / 5) * 100).toFixed(1);
+        } else {
+          scores[factor] = 0;
+          percentages[factor] = 0;
+        }
+      }
+
+      return { scores, percentages };
+    }
+
+    function getDominantTrait(percentages) {
+      let max = 0;
+      let dominant = '';
+      for (let trait in percentages) {
+        if (parseFloat(percentages[trait]) > max) {
+          max = parseFloat(percentages[trait]);
+          dominant = trait;
+        }
+      }
+      return {
+        trait: dominant,
+        percentage: max
+      };
+    }
+
+    function shareOnWhatsApp() {
+      if (!currentResults) return;
+      
+      const { percentages } = currentResults;
+      const dominant = getDominantTrait(percentages);
+      
+      const traitNames = {
+        openness: "Abertura à Experiência",
+        conscientiousness: "Conscienciosidade",
+        extroversion: "Extroversão",
+        agreeableness: "Amabilidade",
+        neuroticism: "Neuroticismo"
+      };
+      
+      // Criar texto para compartilhamento
+      let shareText = "Acabei de fazer o Teste de Personalidade Big Five e descobri meu perfil!\n\n";
+      shareText += `Meu traço predominante: ${traitNames[dominant.trait]} (${dominant.percentage}%)\n\n`;
+      shareText += "Minhas pontuações:\n";
+      shareText += `• ${traitNames.openness}: ${percentages.openness}%\n`;
+      shareText += `• ${traitNames.conscientiousness}: ${percentages.conscientiousness}%\n`;
+      shareText += `• ${traitNames.extroversion}: ${percentages.extroversion}%\n`;
+      shareText += `• ${traitNames.agreeableness}: ${percentages.agreeableness}%\n`;
+      shareText += `• ${traitNames.neuroticism}: ${percentages.neuroticism}%\n\n`;
+      shareText += "Faça o teste também: " + window.location.href;
+      
+      // Codificar o texto para URL
+      const encodedText = encodeURIComponent(shareText);
+      
+      // Criar o link do WhatsApp
+      const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+      
+      // Abrir em uma nova janela
+      window.open(whatsappUrl, '_blank');
+    }
+
+    function renderResults() {
+      currentResults = calculateScores();
+      const { scores, percentages } = currentResults;
+      const dominant = getDominantTrait(percentages);
+      
+      const traitNames = {
+        openness: "Abertura à Experiência",
+        conscientiousness: "Conscienciosidade",
+        extroversion: "Extroversão",
+        agreeableness: "Amabilidade",
+        neuroticism: "Neuroticismo"
+      };
+      
+      const traitDescriptions = {
+        openness: "Pessoas com alta pontuação em abertura tendem a ser curiosas, criativas e abertas a novas experiências. Elas apreciam arte, aventura e ideias incomuns.",
+        conscientiousness: "Indivíduos conscienciosos são organizados, confiáveis e orientados para objetivos. Eles tendem a ser disciplinados e preferem planejar ao invés de ser espontâneos.",
+        extroversion: "Pessoas extrovertidas são energizadas pela interação social, assertivas e talkativas. Elas tendem a ser entusiasmadas e buscam estimulação social.",
+        agreeableness: "Indivíduos com alta amabilidade são cooperativos, compassivos e amigáveis. Eles valorizam a harmonia social e tendem a ser confiantes nos outros.",
+        neuroticism: "Pessoas com alta pontuação em neuroticismo são mais propensas a experimentar emoções negativas como ansiedade, raiva ou depressão. Elas respondem mais pobremente ao estresse."
+      };
+      
+      const traitTraits = {
+        openness: ["Curiosidade intelectual", "Apreciação estética", "Sensibilidade emocional", "Preferência por variedade", "Imaginação ativa"],
+        conscientiousness: ["Organização", "Diligência", "Responsabilidade", "Persistência", "Orientação para objetivos"],
+        extroversion: ["Sociabilidade", "Assertividade", "Energia", "Busca por emoções", "Expressividade emocional"],
+        agreeableness: ["Confiança", "Altruismo", "Compliance", "Modéstia", "Simpatia"],
+        neuroticism: ["Ansiedade", "Raiva hostil", "Depressão", "Autoconsciência", "Vulnerabilidade"]
+      };
+      
+      // Create chart
+      resultDiv.innerHTML = `
+        <div class="text-center mb-4">
+          <h2 class="fw-bold">Seu Perfil de Personalidade</h2>
+          <p class="lead">Seu traço de personalidade mais predominante é:</p>
+          <span class="dominant-badge d-inline-block mb-3">${traitNames[dominant.trait]} (${dominant.percentage}%)</span>
+          <p>${traitDescriptions[dominant.trait]}</p>
+        </div>
+        
+        <div class="chart-container">
+          <canvas id="traitChart"></canvas>
+        </div>
+        
+        <div class="share-buttons">
+          <button id="whatsappShare" class="btn btn-success">
+            <i class="bi bi-whatsapp"></i> Compartilhar no WhatsApp
+          </button>
+        </div>
+        
+        <div class="info-box">
+          <h5><i class="bi bi-info-circle"></i> Sobre a Pontuação de 100%</h5>
+          <p class="mb-0">É extremamente raro que alguém atinja 100% em qualquer traço do Big Five. Personalidades são complexas e todos temos uma mistura de características. Uma pontuação muito alta (acima de 85%) pode indicar um traço muito dominante, mas mesmo assim é incomum chegar a 100%.</p>
+        </div>
+        
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="trait-card openness-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="fw-bold mb-0">${traitNames.openness}</h4>
+                <span class="badge bg-light text-dark">${percentages.openness}%</span>
+              </div>
+              <p>${traitDescriptions.openness}</p>
+              <h5 class="mt-3 fw-semibold">Características:</h5>
+              <ul class="trait-list">
+                ${traitTraits.openness.map(trait => `<li>${trait}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="trait-card conscientiousness-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="fw-bold mb-0">${traitNames.conscientiousness}</h4>
+                <span class="badge bg-light text-dark">${percentages.conscientiousness}%</span>
+              </div>
+              <p>${traitDescriptions.conscientiousness}</p>
+              <h5 class="mt-3 fw-semibold">Características:</h5>
+              <ul class="trait-list">
+                ${traitTraits.conscientiousness.map(trait => `<li>${trait}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="trait-card extroversion-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="fw-bold mb-0">${traitNames.extroversion}</h4>
+                <span class="badge bg-light text-dark">${percentages.extroversion}%</span>
+              </div>
+              <p>${traitDescriptions.extroversion}</p>
+              <h5 class="mt-3 fw-semibold">Características:</h5>
+              <ul class="trait-list">
+                ${traitTraits.extroversion.map(trait => `<li>${trait}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="trait-card agreeableness-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="fw-bold mb-0">${traitNames.agreeableness}</h4>
+                <span class="badge bg-light text-dark">${percentages.agreeableness}%</span>
+              </div>
+              <p>${traitDescriptions.agreeableness}</p>
+              <h5 class="mt-3 fw-semibold">Características:</h5>
+              <ul class="trait-list">
+                ${traitTraits.agreeableness.map(trait => `<li>${trait}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-12">
+            <div class="trait-card neuroticism-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="fw-bold mb-0">${traitNames.neuroticism}</h4>
+                <span class="badge bg-light text-dark">${percentages.neuroticism}%</span>
+              </div>
+              <p>${traitDescriptions.neuroticism}</p>
+              <h5 class="mt-3 fw-semibold">Características:</h5>
+              <ul class="trait-list">
+                ${traitTraits.neuroticism.map(trait => `<li>${trait}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-4 p-4 bg-light rounded">
+          <h4 class="fw-bold">Sobre o Modelo Big Five</h4>
+          <p>O modelo Big Five (Cinco Grandes Fatores) é uma das abordagens mais validadas cientificamente para entender a personalidade humana. Esses cinco fatores representam dimensões amplas que capturam a maioria das diferenças individuais na personalidade.</p>
+          <p class="mb-0">É importante lembrar que não existem traços "bons" ou "ruins" - cada combinação tem suas vantagens e desafios. A autoconsciência sobre seus traços pode ajudá-lo a maximizar seus pontos fortes e gerenciar áreas que podem representar desafios.</p>
+        </div>
+        
+        <div class="text-center mt-4">
+          <button id="retakeTest" class="btn btn-primary">
+            <i class="bi bi-arrow-repeat"></i> Refazer Teste
+          </button>
+        </div>
+      `;
+      
+      // Initialize chart
+      const ctx = document.getElementById('traitChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['Abertura', 'Conscienciosidade', 'Extroversão', 'Amabilidade', 'Neuroticismo'],
+          datasets: [{
+            label: 'Seu perfil',
+            data: [
+              percentages.openness, 
+              percentages.conscientiousness, 
+              percentages.extroversion, 
+              percentages.agreeableness, 
+              percentages.neuroticism
+            ],
+            backgroundColor: 'rgba(26, 75, 140, 0.2)',
+            borderColor: 'rgba(26, 75, 140, 1)',
+            pointBackgroundColor: 'rgba(26, 75, 140, 1)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgba(26, 75, 140, 1)'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                stepSize: 20,
+                callback: function(value) {
+                  return value + '%';
+                }
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.parsed.r + '%';
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // Show results and hide form
+      quizForm.classList.add('hidden');
+      resultDiv.classList.remove('hidden');
+      
+      // Scroll to results
+      setTimeout(() => {
+        resultDiv.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+      
+      // Show floating button
+      floatingBtn.classList.remove('hidden');
+      
+      // Add event listeners
+      document.getElementById('retakeTest').addEventListener('click', () => {
+        resetTest();
+      });
+      
+      document.getElementById('whatsappShare').addEventListener('click', shareOnWhatsApp);
+    }
+
+    function resetTest() {
+      currentPage = 0;
+      answers = Array(questions.length).fill(null);
+      currentResults = null;
+      resultDiv.classList.add('hidden');
+      quizForm.classList.remove('hidden');
+      renderQuestions();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      floatingBtn.classList.add('hidden');
+    }
+
+    quizForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      savePageAnswers();
+      
+      // Check if all questions are answered
+      if (answers.some(answer => answer === null)) {
+        alert('Por favor, responda todas as perguntas antes de ver os resultados.');
+        // Go to the first unanswered question
+        const firstUnanswered = answers.findIndex(answer => answer === null);
+        currentPage = Math.floor(firstUnanswered / questionsPerPage);
+        renderQuestions();
+        return;
+      }
+      
+      renderResults();
+    });
+
+    // Floating button functionality
+    floatingBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        floatingBtn.classList.remove('hidden');
+      } else {
+        floatingBtn.classList.add('hidden');
+      }
+    });
+
+    // Initialize
+    renderQuestions();
+  </script>
+</body>
+</html>
