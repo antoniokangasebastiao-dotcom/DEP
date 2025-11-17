@@ -194,6 +194,34 @@
       margin-left: 8px;
     }
     
+    .share-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .share-btn {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border: none;
+      color: white;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .share-btn:hover {
+      background: linear-gradient(135deg, #128C7E, #075E54);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .whatsapp-icon {
+      margin-right: 8px;
+    }
+    
     @media (max-width: 768px) {
       .header {
         padding: 1.5rem;
@@ -207,611 +235,664 @@
         padding: 1rem;
       }
     }
+    
     .navbar-custom {
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-}
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
 
-.navbar-custom .navbar-brand,
-.navbar-custom .nav-link {
-  color: white;
-  font-weight: 500;
-}
+    .navbar-custom .navbar-brand,
+    .navbar-custom .nav-link {
+      color: white;
+      font-weight: 500;
+    }
 
-.navbar-custom .nav-link:hover {
-  color: rgba(255,255,255,0.8);
-}
+    .navbar-custom .nav-link:hover {
+      color: rgba(255,255,255,0.8);
+    }
 
-.dropdown-menu {
-  border: none;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  border-radius: 10px;
-}
+    .dropdown-menu {
+      border: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 10px;
+    }
 
-.dropdown-item {
-  padding: 0.5rem 1.5rem;
-}
+    .dropdown-item {
+      padding: 0.5rem 1.5rem;
+    }
 
-.dropdown-item:hover {
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-}
+    .dropdown-item:hover {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    }
 
-.sticky-top {
-  position: sticky;
-  top: 0;
-  z-index: 1020;
-}
+    .sticky-top {
+      position: sticky;
+      top: 0;
+      z-index: 1020;
+    }
   </style>
 </head>
 <body>
-   <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">
-      <i class="bi bi-stars me-2"></i>DEP-desbloqueio estratégico de potencial
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarContent">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-            <i class="bi bi-clipboard-check me-2"></i>Testes
-          </a>
-           <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="temperamento.html">
-                <i class="bi bi-emoji-smile me-2"></i>Temperamento
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="DISC.html">
-                <i class="bi bi-person-lines-fill me-2"></i>Perfil DISC
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="amor.html">
-                <i class="bi bi-heart-fill me-2"></i>Linguagem do Amor
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="canal.html">
-                <i class="bi bi-book-half me-2"></i>Canal de Aprendizagem
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="inteligencia.html">
-                <i class="bi bi-lightbulb me-2"></i>Tipos de Inteligência
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<div class="container py-4">
-  <div class="header text-center">
-    <h1 class="fw-bold mb-3">Teste de Canal de Aprendizagem</h1>
-    <p class="mb-0">Descubra seu estilo predominante de aprendizagem: Visual, Auditivo ou Cinestésico</p>
-  </div>
-
-  <div class="progress-container">
-    <div class="d-flex justify-content-between mb-2">
-      <span>Progresso</span>
-      <span id="progressText">0%</span>
-    </div>
-    <div class="progress">
-      <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
-    </div>
-  </div>
-
-  <form id="quizForm">
-    <div id="questions"></div>
-
-    <div class="d-flex justify-content-between mt-4">
-      <button type="button" class="btn btn-outline-secondary" id="prevBtn" disabled>
-        <i class="bi bi-arrow-left"></i> Anterior
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-stars me-2"></i>DEP-Educação
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
       </button>
-      <button type="button" class="btn btn-primary" id="nextBtn">
-        Próximo <i class="bi bi-arrow-right"></i>
-      </button>
-      <button type="submit" class="btn btn-success hidden" id="submitBtn">
-        <i class="bi bi-check-circle"></i> Ver Resultados
-      </button>
-    </div>
-  </form>
 
-  <div id="result" class="result-container d-none">
-    <!-- Result content will be inserted here -->
-  </div>
-</div>
-
-<!-- Floating button for quick navigation -->
-<button id="floatingBtn" class="floating-btn btn btn-primary hidden">
-  <i class="bi bi-arrow-up"></i>
-</button>
-
-<!-- Chart.js for results visualization -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-// Baseado no modelo VAK (Visual, Auditivo, Cinestésico) validado pedagogicamente
-const questions = [
-  { 
-    text: "Quando você precisa aprender algo novo, você prefere:", 
-    options: [
-      { text: "Ler instruções ou ver diagramas/exemplos visuais", type: "visual" },
-      { text: "Ouvir explicações de alguém ou gravar para ouvir depois", type: "auditivo" },
-      { text: "Experimentar na prática, mexendo e tentando fazer", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Em uma palestra ou aula, você se concentra melhor quando:", 
-    options: [
-      { text: "Há slides, gráficos ou material visual de apoio", type: "visual" },
-      { text: "O palestrante explica claramente, mesmo sem material visual", type: "auditivo" },
-      { text: "Pode fazer anotações ou participar de atividades práticas", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Ao tentar lembrar de uma informação, você:", 
-    options: [
-      { text: "Visualiza mentalmente onde estava escrita ou como era o diagrama", type: "visual" },
-      { text: "Repete mentalmente ou ouve a voz que explicou aquilo", type: "auditivo" },
-      { text: "Lembra da sensação ou movimento associado a essa informação", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Quando está estudando, você:", 
-    options: [
-      { text: "Faz resumos coloridos, usa marcadores e organiza visualmente", type: "visual" },
-      { text: "Gosta de ler em voz alta ou explicar o conteúdo para alguém", type: "auditivo" },
-      { text: "Precisa mexer em algo, andar ou usar objetos para fixar o conteúdo", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Para decorar um número de telefone, você:", 
-    options: [
-      { text: "Visualiza os números escritos", type: "visual" },
-      { text: "Repete em voz alta várias vezes", type: "auditivo" },
-      { text: "Digita no teclado imaginário ou associa a um movimento", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Em seu ambiente de estudos ideal, você prefere:", 
-    options: [
-      { text: "Organização visual, com quadros, post-its e materiais à vista", type: "visual" },
-      { text: "Silêncio ou música de fundo, com possibilidade de ouvir gravações", type: "auditivo" },
-      { text: "Conforto físico, liberdade para se movimentar e objetos para manipular", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Ao explicar um caminho para alguém, você:", 
-    options: [
-      { text: "Desenha um mapa ou mostra no aplicativo", type: "visual" },
-      { text: "Descreve detalhadamente cada etapa do percurso", type: "auditivo" },
-      { text: "Indica pontos de referência físicos ('vira onde tem a árvore torta')", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Quando está em uma reunião ou aula, você:", 
-    options: [
-      { text: "Precisa ver anotações ou apresentações para acompanhar", type: "visual" },
-      { text: "Consegue acompanhar bem apenas ouvindo", type: "auditivo" },
-      { text: "Precisa rabiscar ou mexer em algo para se concentrar", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Para montar um móvel ou equipamento novo, você:", 
-    options: [
-      { text: "Segue o manual com diagramas passo a passo", type: "visual" },
-      { text: "Prefere que alguém explique como fazer", type: "auditivo" },
-      { text: "Começa a montar e vai descobrindo na prática", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Quando está tentando se lembrar de um nome, você:", 
-    options: [
-      { text: "Visualiza como é escrito", type: "visual" },
-      { text: "Repete o nome várias vezes em voz alta", type: "auditivo" },
-      { text: "Associa a uma sensação ou movimento (ex: 'Ana' - amiga que abraça)", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Em um museu ou exposição, você:", 
-    options: [
-      { text: "Observa atentamente as obras e painéis explicativos", type: "visual" },
-      { text: "Prefere o audioguia ou explicações do monitor", type: "auditivo" },
-      { text: "Quer tocar nas peças interativas ou sentir a atmosfera do local", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Quando está nervoso ou ansioso, você:", 
-    options: [
-      { text: "Visualiza um lugar calmo ou imagens tranquilizadoras", type: "visual" },
-      { text: "Ouve música calmante ou mantras", type: "auditivo" },
-      { text: "Precisa se movimentar ou manipular algo (bola anti-stress)", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Ao aprender uma nova habilidade física (esporte, dança), você:", 
-    options: [
-      { text: "Assiste a vídeos ou observa alguém fazendo antes de tentar", type: "visual" },
-      { text: "Prefere instruções verbais detalhadas", type: "auditivo" },
-      { text: "Aprende tentando e sentindo o movimento", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Em uma livraria, você se atrai primeiro por:", 
-    options: [
-      { text: "O design da capa e a diagramação do livro", type: "visual" },
-      { text: "Recomendações do vendedor ou podcasts sobre o livro", type: "auditivo" },
-      { text: "A textura do livro e a sensação de segurá-lo", type: "cinestesico" }
-    ]
-  },
-  { 
-    text: "Quando precisa se concentrar, você:", 
-    options: [
-      { text: "Organiza seu espaço visualmente limpo e ordenado", type: "visual" },
-      { text: "Coloca música ou fones com ruído branco", type: "auditivo" },
-      { text: "Precisa de movimento ou de mexer em algo (caneta, bola)", type: "cinestesico" }
-    ]
-  }
-];
-
-const questionsDiv = document.getElementById('questions');
-const progressBar = document.getElementById('progressBar');
-const progressText = document.getElementById('progressText');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const submitBtn = document.getElementById('submitBtn');
-const floatingBtn = document.getElementById('floatingBtn');
-const resultDiv = document.getElementById('result');
-
-let currentPage = 0;
-const questionsPerPage = 4;
-let answers = Array(questions.length).fill(null);
-
-function renderQuestions() {
-  questionsDiv.innerHTML = '';
-  const start = currentPage * questionsPerPage;
-  const end = Math.min(start + questionsPerPage, questions.length);
-
-  for (let i = start; i < end; i++) {
-    const q = questions[i];
-    let optionsHtml = '';
-    
-    q.options.forEach((option, idx) => {
-      const isChecked = answers[i] === idx;
-      optionsHtml += `
-        <div class="form-check mb-2">
-          <input class="form-check-input" type="radio" name="q${i}" id="q${i}-${idx}" value="${idx}" ${isChecked ? 'checked' : ''} required>
-          <label class="form-check-label option-label" for="q${i}-${idx}">${option.text}</label>
-        </div>
-      `;
-    });
-    
-    questionsDiv.innerHTML += `
-      <div class="question-card">
-        <h5 class="fw-semibold mb-3">${i + 1}. ${q.text}</h5>
-        ${optionsHtml}
-      </div>
-    `;
-  }
-
-  updateProgress();
-  prevBtn.disabled = currentPage === 0;
-  nextBtn.classList.toggle('hidden', end === questions.length);
-  submitBtn.classList.toggle('hidden', end !== questions.length);
-}
-
-function updateProgress() {
-  const totalPages = Math.ceil(questions.length / questionsPerPage);
-  const progress = ((currentPage + 1) / totalPages) * 100;
-  progressBar.style.width = progress + '%';
-  progressText.textContent = Math.round(progress) + '% completado';
-}
-
-function savePageAnswers() {
-  const start = currentPage * questionsPerPage;
-  const end = Math.min(start + questionsPerPage, questions.length);
-
-  for (let i = start; i < end; i++) {
-    const checkedRadio = document.querySelector(`input[name="q${i}"]:checked`);
-    if (checkedRadio) {
-      answers[i] = parseInt(checkedRadio.value);
-    }
-  }
-}
-
-nextBtn.addEventListener('click', () => {
-  if (validatePage()) {
-    savePageAnswers();
-    currentPage++;
-    renderQuestions();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-});
-
-prevBtn.addEventListener('click', () => {
-  savePageAnswers();
-  currentPage--;
-  renderQuestions();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-function validatePage() {
-  const start = currentPage * questionsPerPage;
-  const end = Math.min(start + questionsPerPage, questions.length);
-
-  for (let i = start; i < end; i++) {
-    const radios = document.getElementsByName(`q${i}`);
-    if (![...radios].some(r => r.checked)) {
-      alert('Por favor, responda todas as perguntas desta página antes de continuar.');
-      return false;
-    }
-  }
-  return true;
-}
-
-function getDominantLearningStyle(scores) {
-  let max = 0;
-  let dominant = '';
-  for (let type in scores) {
-    if (scores[type] > max) {
-      max = scores[type];
-      dominant = type;
-    }
-  }
-  return {
-    type: dominant,
-    score: max
-  };
-}
-
-function renderResults(scores) {
-  const dominant = getDominantLearningStyle(scores);
-  const styleNames = {
-    visual: "Visual",
-    auditivo: "Auditivo",
-    cinestesico: "Cinestésico"
-  };
-  
-  const styleDescriptions = {
-    visual: "Aprendem melhor através de imagens, diagramas, cores e organização visual. Tendem a pensar em imagens e se lembram melhor do que veem do que do que ouvem. Precisam ver informações para compreendê-las plenamente.",
-    auditivo: "Aprendem melhor através de sons, música, discussões e explicações verbais. Processam informações sequencialmente e tendem a ser bons ouvintes. Memorizam bem o que ouvem e aprendem melhor através da fala.",
-    cinestesico: "Aprendem melhor através do movimento, toque e experiência prática. Precisam estar fisicamente envolvidos no aprendizado, mexendo, construindo ou sentindo. Aprendem fazendo e se lembram melhor através da ação."
-  };
-  
-  const styleTraits = {
-    visual: ["Pensam em imagens", "Organizados visualmente", "Boa memória para rostos e lugares", "Gostam de gráficos e diagramas", "Precisam de silêncio para se concentrar"],
-    auditivo: ["Pensam em palavras", "Boa memória para nomes e conversas", "Gostam de discussões e explicações", "Repetem informações para memorizar", "Distraem-se facilmente com ruídos"],
-    cinestesico: ["Pensam em sensações", "Aprendem fazendo", "Memória muscular desenvolvida", "Gostam de experiências práticas", "Precisam se movimentar para aprender"]
-  };
-  
-  const styleTips = {
-    visual: [
-      "Use mapas mentais, gráficos e diagramas",
-      "Assista a vídeos educativos",
-      "Faça resumos coloridos e organizados",
-      "Use post-its e marcadores de texto",
-      "Visualize conceitos abstratos"
-    ],
-    auditivo: [
-      "Grave aulas e ouça depois",
-      "Participe de discussões em grupo",
-      "Use músicas e rimas para memorizar",
-      "Leia em voz alta ou explique para outros",
-      "Use podcasts e audiobooks"
-    ],
-    cinestesico: [
-      "Faça experimentos práticos",
-      "Use objetos físicos para aprender",
-      "Ande enquanto estuda ou revise",
-      "Faça pausas frequentes para se movimentar",
-      "Associe conceitos a movimentos ou sensações"
-    ]
-  };
-  
-  // Calculate percentages
-  const total = Object.values(scores).reduce((a, b) => a + b, 0);
-  const percentages = {};
-  for (let type in scores) {
-    percentages[type] = ((scores[type] / total) * 100).toFixed(1);
-  }
-  
-  // Create chart
-  resultDiv.innerHTML = `
-    <div class="text-center mb-4">
-      <h2 class="fw-bold">Seu Estilo de Aprendizagem</h2>
-      <p class="lead">Seu canal predominante de aprendizagem é:</p>
-      <span class="dominant-badge d-inline-block mb-3">${styleNames[dominant.type]} (${percentages[dominant.type]}%)</span>
-      <p>${styleDescriptions[dominant.type]}</p>
-    </div>
-    
-    <div class="chart-container">
-      <canvas id="learningChart"></canvas>
-    </div>
-    
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="learning-card visual-card">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h4 class="fw-bold mb-0">Visual</h4>
-            <span class="badge bg-light text-dark">${percentages.visual}%</span>
-          </div>
-          <p>${styleDescriptions.visual}</p>
-          <h5 class="mt-3 fw-semibold">Características:</h5>
-          <ul class="trait-list">
-            ${styleTraits.visual.map(trait => `<li>${trait}</li>`).join('')}
-          </ul>
-          <h5 class="mt-3 fw-semibold">Dicas para Aprender Melhor:</h5>
-          ${styleTips.visual.map(tip => `<div class="learning-tip">${tip}</div>`).join('')}
-        </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="learning-card auditivo-card">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h4 class="fw-bold mb-0">Auditivo</h4>
-            <span class="badge bg-light text-dark">${percentages.auditivo}%</span>
-          </div>
-          <p>${styleDescriptions.auditivo}</p>
-          <h5 class="mt-3 fw-semibold">Características:</h5>
-          <ul class="trait-list">
-            ${styleTraits.auditivo.map(trait => `<li>${trait}</li>`).join('')}
-          </ul>
-          <h5 class="mt-3 fw-semibold">Dicas para Aprender Melhor:</h5>
-          ${styleTips.auditivo.map(tip => `<div class="learning-tip">${tip}</div>`).join('')}
-        </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="learning-card cinestesico-card">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h4 class="fw-bold mb-0">Cinestésico</h4>
-            <span class="badge bg-light text-dark">${percentages.cinestesico}%</span>
-          </div>
-          <p>${styleDescriptions.cinestesico}</p>
-          <h5 class="mt-3 fw-semibold">Características:</h5>
-          <ul class="trait-list">
-            ${styleTraits.cinestesico.map(trait => `<li>${trait}</li>`).join('')}
-          </ul>
-          <h5 class="mt-3 fw-semibold">Dicas para Aprender Melhor:</h5>
-          ${styleTips.cinestesico.map(tip => `<div class="learning-tip">${tip}</div>`).join('')}
-        </div>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="bi bi-clipboard-check me-2"></i>Testes
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="temperamento.html">
+                  <i class="bi bi-emoji-smile me-2"></i>Temperamento
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="DISC.html">
+                  <i class="bi bi-person-lines-fill me-2"></i>Perfil DISC
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="amor.html">
+                  <i class="bi bi-heart-fill me-2"></i>Linguagem do Amor
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="canal.html">
+                  <i class="bi bi-book-half me-2"></i>Canal de Aprendizagem
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="inteligencia.html">
+                  <i class="bi bi-lightbulb me-2"></i>Tipos de Inteligência
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
-    
-    <div class="mt-4 p-4 bg-light rounded">
-      <h4 class="fw-bold">Sobre os Canais de Aprendizagem</h4>
-      <p>O modelo VAK (Visual, Auditivo, Cinestésico) foi desenvolvido a partir dos trabalhos de psicólogos e educadores como Fernald, Keller, Orton, Gillingham e outros. Ele identifica os três principais canais sensoriais que as pessoas usam para aprender e processar informações.</p>
-      <p class="mb-0">A maioria das pessoas tem um canal predominante, mas utiliza os outros em menor grau. Conhecer seu estilo de aprendizagem pode ajudar a desenvolver estratégias mais eficientes para estudar, trabalhar e adquirir novas habilidades.</p>
+  </nav>
+
+  <div class="container py-4">
+    <div class="header text-center">
+      <h1 class="fw-bold mb-3">Teste de Canal de Aprendizagem</h1>
+      <p class="mb-0">Descubra seu estilo predominante de aprendizagem: Visual, Auditivo ou Cinestésico</p>
     </div>
-    
-    <div class="text-center mt-4">
-      <button id="retakeTest" class="btn btn-primary">
-        <i class="bi bi-arrow-repeat"></i> Refazer Teste
-      </button>
+
+    <div class="progress-container">
+      <div class="d-flex justify-content-between mb-2">
+        <span>Progresso</span>
+        <span id="progressText">0%</span>
+      </div>
+      <div class="progress">
+        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+      </div>
     </div>
-  `;
-  
-  // Initialize chart
-  const ctx = document.getElementById('learningChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Visual', 'Auditivo', 'Cinestésico'],
-      datasets: [{
-        label: 'Porcentagem do seu estilo',
-        data: [percentages.visual, percentages.auditivo, percentages.cinestesico],
-        backgroundColor: [
-          'rgba(106, 17, 203, 0.7)',
-          'rgba(37, 117, 252, 0.7)',
-          'rgba(42, 157, 143, 0.7)'
-        ],
-        borderColor: [
-          'rgba(106, 17, 203, 1)',
-          'rgba(37, 117, 252, 1)',
-          'rgba(42, 157, 143, 1)'
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 100,
-          ticks: {
-            callback: function(value) {
-              return value + '%';
-            }
-          }
-        }
+
+    <form id="quizForm">
+      <div id="questions"></div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-outline-secondary" id="prevBtn" disabled>
+          <i class="bi bi-arrow-left"></i> Anterior
+        </button>
+        <button type="button" class="btn btn-primary" id="nextBtn">
+          Próximo <i class="bi bi-arrow-right"></i>
+        </button>
+        <button type="submit" class="btn btn-success hidden" id="submitBtn">
+          <i class="bi bi-check-circle"></i> Ver Resultados
+        </button>
+      </div>
+    </form>
+
+    <div id="result" class="result-container d-none">
+      <!-- Result content will be inserted here -->
+    </div>
+  </div>
+
+  <!-- Floating button for quick navigation -->
+  <button id="floatingBtn" class="floating-btn btn btn-primary hidden">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Chart.js for results visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Baseado no modelo VAK (Visual, Auditivo, Cinestésico) validado pedagogicamente
+    const questions = [
+      { 
+        text: "Quando você precisa aprender algo novo, você prefere:", 
+        options: [
+          { text: "Ler instruções ou ver diagramas/exemplos visuais", type: "visual" },
+          { text: "Ouvir explicações de alguém ou gravar para ouvir depois", type: "auditivo" },
+          { text: "Experimentar na prática, mexendo e tentando fazer", type: "cinestesico" }
+        ]
       },
-      plugins: {
-        legend: {
-          display: false
-        },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              return context.parsed.y + '%';
-            }
-          }
+      { 
+        text: "Em uma palestra ou aula, você se concentra melhor quando:", 
+        options: [
+          { text: "Há slides, gráficos ou material visual de apoio", type: "visual" },
+          { text: "O palestrante explica claramente, mesmo sem material visual", type: "auditivo" },
+          { text: "Pode fazer anotações ou participar de atividades práticas", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Ao tentar lembrar de uma informação, você:", 
+        options: [
+          { text: "Visualiza mentalmente onde estava escrita ou como era o diagrama", type: "visual" },
+          { text: "Repete mentalmente ou ouve a voz que explicou aquilo", type: "auditivo" },
+          { text: "Lembra da sensação ou movimento associado a essa informação", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Quando está estudando, você:", 
+        options: [
+          { text: "Faz resumos coloridos, usa marcadores e organiza visualmente", type: "visual" },
+          { text: "Gosta de ler em voz alta ou explicar o conteúdo para alguém", type: "auditivo" },
+          { text: "Precisa mexer em algo, andar ou usar objetos para fixar o conteúdo", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Para decorar um número de telefone, você:", 
+        options: [
+          { text: "Visualiza os números escritos", type: "visual" },
+          { text: "Repete em voz alta várias vezes", type: "auditivo" },
+          { text: "Digita no teclado imaginário ou associa a um movimento", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Em seu ambiente de estudos ideal, você prefere:", 
+        options: [
+          { text: "Organização visual, com quadros, post-its e materiais à vista", type: "visual" },
+          { text: "Silêncio ou música de fundo, com possibilidade de ouvir gravações", type: "auditivo" },
+          { text: "Conforto físico, liberdade para se movimentar e objetos para manipular", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Ao explicar um caminho para alguém, você:", 
+        options: [
+          { text: "Desenha um mapa ou mostra no aplicativo", type: "visual" },
+          { text: "Descreve detalhadamente cada etapa do percurso", type: "auditivo" },
+          { text: "Indica pontos de referência físicos ('vira onde tem a árvore torta')", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Quando está em uma reunião ou aula, você:", 
+        options: [
+          { text: "Precisa ver anotações ou apresentações para acompanhar", type: "visual" },
+          { text: "Consegue acompanhar bem apenas ouvindo", type: "auditivo" },
+          { text: "Precisa rabiscar ou mexer em algo para se concentrar", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Para montar um móvel ou equipamento novo, você:", 
+        options: [
+          { text: "Segue o manual com diagramas passo a passo", type: "visual" },
+          { text: "Prefere que alguém explique como fazer", type: "auditivo" },
+          { text: "Começa a montar e vai descobrindo na prática", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Quando está tentando se lembrar de um nome, você:", 
+        options: [
+          { text: "Visualiza como é escrito", type: "visual" },
+          { text: "Repete o nome várias vezes em voz alta", type: "auditivo" },
+          { text: "Associa a uma sensação ou movimento (ex: 'Ana' - amiga que abraça)", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Em um museu ou exposição, você:", 
+        options: [
+          { text: "Observa atentamente as obras e painéis explicativos", type: "visual" },
+          { text: "Prefere o audioguia ou explicações do monitor", type: "auditivo" },
+          { text: "Quer tocar nas peças interativas ou sentir a atmosfera do local", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Quando está nervoso ou ansioso, você:", 
+        options: [
+          { text: "Visualiza um lugar calmo ou imagens tranquilizadoras", type: "visual" },
+          { text: "Ouve música calmante ou mantras", type: "auditivo" },
+          { text: "Precisa se movimentar ou manipular algo (bola anti-stress)", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Ao aprender uma nova habilidade física (esporte, dança), você:", 
+        options: [
+          { text: "Assiste a vídeos ou observa alguém fazendo antes de tentar", type: "visual" },
+          { text: "Prefere instruções verbais detalhadas", type: "auditivo" },
+          { text: "Aprende tentando e sentindo o movimento", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Em uma livraria, você se atrai primeiro por:", 
+        options: [
+          { text: "O design da capa e a diagramação do livro", type: "visual" },
+          { text: "Recomendações do vendedor ou podcasts sobre o livro", type: "auditivo" },
+          { text: "A textura do livro e a sensação de segurá-lo", type: "cinestesico" }
+        ]
+      },
+      { 
+        text: "Quando precisa se concentrar, você:", 
+        options: [
+          { text: "Organiza seu espaço visualmente limpo e ordenado", type: "visual" },
+          { text: "Coloca música ou fones com ruído branco", type: "auditivo" },
+          { text: "Precisa de movimento ou de mexer em algo (caneta, bola)", type: "cinestesico" }
+        ]
+      }
+    ];
+
+    const questionsDiv = document.getElementById('questions');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const floatingBtn = document.getElementById('floatingBtn');
+    const resultDiv = document.getElementById('result');
+
+    let currentPage = 0;
+    const questionsPerPage = 4;
+    let answers = Array(questions.length).fill(null);
+    let currentResults = null;
+
+    function renderQuestions() {
+      questionsDiv.innerHTML = '';
+      const start = currentPage * questionsPerPage;
+      const end = Math.min(start + questionsPerPage, questions.length);
+
+      for (let i = start; i < end; i++) {
+        const q = questions[i];
+        let optionsHtml = '';
+        
+        q.options.forEach((option, idx) => {
+          const isChecked = answers[i] === idx;
+          optionsHtml += `
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="q${i}" id="q${i}-${idx}" value="${idx}" ${isChecked ? 'checked' : ''} required>
+              <label class="form-check-label option-label" for="q${i}-${idx}">${option.text}</label>
+            </div>
+          `;
+        });
+        
+        questionsDiv.innerHTML += `
+          <div class="question-card">
+            <h5 class="fw-semibold mb-3">${i + 1}. ${q.text}</h5>
+            ${optionsHtml}
+          </div>
+        `;
+      }
+
+      updateProgress();
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.classList.toggle('hidden', end === questions.length);
+      submitBtn.classList.toggle('hidden', end !== questions.length);
+    }
+
+    function updateProgress() {
+      const totalPages = Math.ceil(questions.length / questionsPerPage);
+      const progress = ((currentPage + 1) / totalPages) * 100;
+      progressBar.style.width = progress + '%';
+      progressText.textContent = Math.round(progress) + '% completado';
+    }
+
+    function savePageAnswers() {
+      const start = currentPage * questionsPerPage;
+      const end = Math.min(start + questionsPerPage, questions.length);
+
+      for (let i = start; i < end; i++) {
+        const checkedRadio = document.querySelector(`input[name="q${i}"]:checked`);
+        if (checkedRadio) {
+          answers[i] = parseInt(checkedRadio.value);
         }
       }
     }
-  });
-  
-  // Scroll to results
-  setTimeout(() => {
-    resultDiv.scrollIntoView({ behavior: 'smooth' });
-  }, 300);
-  
-  // Show floating button
-  floatingBtn.classList.remove('hidden');
-  
-  // Add retake test event
-  document.getElementById('retakeTest').addEventListener('click', () => {
-    resetTest();
-  });
-}
 
-function resetTest() {
-  currentPage = 0;
-  answers = Array(questions.length).fill(null);
-  resultDiv.classList.add('d-none');
-  document.getElementById('quizForm').classList.remove('d-none');
-  renderQuestions();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  floatingBtn.classList.add('hidden');
-}
+    nextBtn.addEventListener('click', () => {
+      if (validatePage()) {
+        savePageAnswers();
+        currentPage++;
+        renderQuestions();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
 
-document.getElementById('quizForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-  savePageAnswers();
+    prevBtn.addEventListener('click', () => {
+      savePageAnswers();
+      currentPage--;
+      renderQuestions();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
-  let scores = { visual: 0, auditivo: 0, cinestesico: 0 };
+    function validatePage() {
+      const start = currentPage * questionsPerPage;
+      const end = Math.min(start + questionsPerPage, questions.length);
 
-  questions.forEach((q, index) => {
-    if (answers[index] !== null) {
-      const selectedOption = q.options[answers[index]];
-      scores[selectedOption.type]++;
+      for (let i = start; i < end; i++) {
+        const radios = document.getElementsByName(`q${i}`);
+        if (![...radios].some(r => r.checked)) {
+          alert('Por favor, responda todas as perguntas desta página antes de continuar.');
+          return false;
+        }
+      }
+      return true;
     }
-  });
 
-  document.getElementById('quizForm').classList.add('d-none');
-  resultDiv.classList.remove('d-none');
-  
-  renderResults(scores);
-});
+    function getDominantLearningStyle(scores) {
+      let max = 0;
+      let dominant = '';
+      for (let type in scores) {
+        if (scores[type] > max) {
+          max = scores[type];
+          dominant = type;
+        }
+      }
+      return {
+        type: dominant,
+        score: max
+      };
+    }
 
-// Floating button functionality
-floatingBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+    function formatResultsForWhatsApp(scores, dominant) {
+      const styleNames = {
+        visual: "Visual",
+        auditivo: "Auditivo",
+        cinestesico: "Cinestésico"
+      };
+      
+      // Calculate percentages
+      const total = Object.values(scores).reduce((a, b) => a + b, 0);
+      const percentages = {};
+      for (let type in scores) {
+        percentages[type] = ((scores[type] / total) * 100).toFixed(1);
+      }
+      
+      const dominantStyle = styleNames[dominant.type];
+      const dominantPercentage = percentages[dominant.type];
+      
+      let message = `🤖 *RESULTADO DO TESTE DE CANAL DE APRENDIZAGEM*\n\n`;
+      message += `🎯 *Seu estilo predominante:* ${dominantStyle} (${dominantPercentage}%)\n\n`;
+      message += `📊 *Seus resultados completos:*\n`;
+      message += `👁️ Visual: ${percentages.visual}%\n`;
+      message += `👂 Auditivo: ${percentages.auditivo}%\n`;
+      message += `✋ Cinestésico: ${percentages.cinestesico}%\n\n`;
+      message += `💡 *Dica:* Use essas informações para personalizar sua conversa comigo sobre estratégias de aprendizado!\n\n`;
+      message += `_Enviado via DEP - Desbloqueio Estratégico de Potencial_`;
+      
+      return message;
+    }
 
-window.addEventListener('scroll', () => {
-  if (window.pageYOffset > 300) {
-    floatingBtn.classList.remove('hidden');
-  } else {
-    floatingBtn.classList.add('hidden');
-  }
-});
+    function shareWithWhatsApp(scores, dominant) {
+      const message = formatResultsForWhatsApp(scores, dominant);
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+      window.open(whatsappUrl, '_blank');
+    }
 
-// Initialize
-renderQuestions();
-</script>
+    function renderResults(scores) {
+      currentResults = { scores, dominant: getDominantLearningStyle(scores) };
+      
+      const dominant = currentResults.dominant;
+      const styleNames = {
+        visual: "Visual",
+        auditivo: "Auditivo",
+        cinestesico: "Cinestésico"
+      };
+      
+      const styleDescriptions = {
+        visual: "Aprendem melhor através de imagens, diagramas, cores e organização visual. Tendem a pensar em imagens e se lembram melhor do que veem do que do que ouvem. Precisam ver informações para compreendê-las plenamente.",
+        auditivo: "Aprendem melhor através de sons, música, discussões e explicações verbais. Processam informações sequencialmente e tendem a ser bons ouvintes. Memorizam bem o que ouvem e aprendem melhor através da fala.",
+        cinestesico: "Aprendem melhor através do movimento, toque e experiência prática. Precisam estar fisicamente envolvidos no aprendizado, mexendo, construindo ou sentindo. Aprendem fazendo e se lembram melhor através da ação."
+      };
+      
+      const styleTraits = {
+        visual: ["Pensam em imagens", "Organizados visualmente", "Boa memória para rostos e lugares", "Gostam de gráficos e diagramas", "Precisam de silêncio para se concentrar"],
+        auditivo: ["Pensam em palavras", "Boa memória para nomes e conversas", "Gostam de discussões e explicações", "Repetem informações para memorizar", "Distraem-se facilmente com ruídos"],
+        cinestesico: ["Pensam em sensações", "Aprendem fazendo", "Memória muscular desenvolvida", "Gostam de experiências práticas", "Precisam se movimentar para aprender"]
+      };
+      
+      const styleTips = {
+        visual: [
+          "Use mapas mentais, gráficos e diagramas",
+          "Assista a vídeos educativos",
+          "Faça resumos coloridos e organizados",
+          "Use post-its e marcadores de texto",
+          "Visualize conceitos abstratos"
+        ],
+        auditivo: [
+          "Grave aulas e ouça depois",
+          "Participe de discussões em grupo",
+          "Use músicas e rimas para memorizar",
+          "Leia em voz alta ou explique para outros",
+          "Use podcasts e audiobooks"
+        ],
+        cinestesico: [
+          "Faça experimentos práticos",
+          "Use objetos físicos para aprender",
+          "Ande enquanto estuda ou revise",
+          "Faça pausas frequentes para se movimentar",
+          "Associe conceitos a movimentos ou sensações"
+        ]
+      };
+      
+      // Calculate percentages
+      const total = Object.values(scores).reduce((a, b) => a + b, 0);
+      const percentages = {};
+      for (let type in scores) {
+        percentages[type] = ((scores[type] / total) * 100).toFixed(1);
+      }
+      
+      // Create chart
+      resultDiv.innerHTML = `
+        <div class="text-center mb-4">
+          <h2 class="fw-bold">Seu Estilo de Aprendizagem</h2>
+          <p class="lead">Seu canal predominante de aprendizagem é:</p>
+          <span class="dominant-badge d-inline-block mb-3">${styleNames[dominant.type]} (${percentages[dominant.type]}%)</span>
+          <p>${styleDescriptions[dominant.type]}</p>
+        </div>
+        
+        <div class="chart-container">
+          <canvas id="learningChart"></canvas>
+        </div>
+        
+        <div class="share-container">
+          <div class="text-center">
+            <h4 class="fw-bold mb-3">Compartilhar Resultados</h4>
+            <p class="mb-3">Compartilhe seus resultados com o ChatGPT do WhatsApp para ter uma conversa mais personalizada sobre estratégias de aprendizado!</p>
+            <button id="whatsappShare" class="share-btn">
+              <i class="bi bi-whatsapp whatsapp-icon"></i> Compartilhar com WhatsApp
+            </button>
+          </div>
+        </div>
+        
+        <div class="row g-4 mt-4">
+          <div class="col-md-4">
+            <div class="learning-card visual-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="fw-bold mb-0">Visual</h4>
+                <span class="badge bg-light text-dark">${percentages.visual}%</span>
+              </div>
+              <p>${styleDescriptions.visual}</p>
+              <h5 class="mt-3 fw-semibold">Características:</h5>
+              <ul class="trait-list">
+                ${styleTraits.visual.map(trait => `<li>${trait}</li>`).join('')}
+              </ul>
+              <h5 class="mt-3 fw-semibold">Dicas para Aprender Melhor:</h5>
+              ${styleTips.visual.map(tip => `<div class="learning-tip">${tip}</div>`).join('')}
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="learning-card auditivo-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="fw-bold mb-0">Auditivo</h4>
+                <span class="badge bg-light text-dark">${percentages.auditivo}%</span>
+              </div>
+              <p>${styleDescriptions.auditivo}</p>
+              <h5 class="mt-3 fw-semibold">Características:</h5>
+              <ul class="trait-list">
+                ${styleTraits.auditivo.map(trait => `<li>${trait}</li>`).join('')}
+              </ul>
+              <h5 class="mt-3 fw-semibold">Dicas para Aprender Melhor:</h5>
+              ${styleTips.auditivo.map(tip => `<div class="learning-tip">${tip}</div>`).join('')}
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="learning-card cinestesico-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="fw-bold mb-0">Cinestésico</h4>
+                <span class="badge bg-light text-dark">${percentages.cinestesico}%</span>
+              </div>
+              <p>${styleDescriptions.cinestesico}</p>
+              <h5 class="mt-3 fw-semibold">Características:</h5>
+              <ul class="trait-list">
+                ${styleTraits.cinestesico.map(trait => `<li>${trait}</li>`).join('')}
+              </ul>
+              <h5 class="mt-3 fw-semibold">Dicas para Aprender Melhor:</h5>
+              ${styleTips.cinestesico.map(tip => `<div class="learning-tip">${tip}</div>`).join('')}
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-4 p-4 bg-light rounded">
+          <h4 class="fw-bold">Sobre os Canais de Aprendizagem</h4>
+          <p>O modelo VAK (Visual, Auditivo, Cinestésico) foi desenvolvido a partir dos trabalhos de psicólogos e educadores como Fernald, Keller, Orton, Gillingham e outros. Ele identifica os três principais canais sensoriais que as pessoas usam para aprender e processar informações.</p>
+          <p class="mb-0">A maioria das pessoas tem um canal predominante, mas utiliza os outros em menor grau. Conhecer seu estilo de aprendizagem pode ajudar a desenvolver estratégias mais eficientes para estudar, trabalhar e adquirir novas habilidades.</p>
+        </div>
+        
+        <div class="text-center mt-4">
+          <button id="retakeTest" class="btn btn-primary">
+            <i class="bi bi-arrow-repeat"></i> Refazer Teste
+          </button>
+        </div>
+      `;
+      
+      // Initialize chart
+      const ctx = document.getElementById('learningChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Visual', 'Auditivo', 'Cinestésico'],
+          datasets: [{
+            label: 'Porcentagem do seu estilo',
+            data: [percentages.visual, percentages.auditivo, percentages.cinestesico],
+            backgroundColor: [
+              'rgba(106, 17, 203, 0.7)',
+              'rgba(37, 117, 252, 0.7)',
+              'rgba(42, 157, 143, 0.7)'
+            ],
+            borderColor: [
+              'rgba(106, 17, 203, 1)',
+              'rgba(37, 117, 252, 1)',
+              'rgba(42, 157, 143, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                callback: function(value) {
+                  return value + '%';
+                }
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.parsed.y + '%';
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // Add event listener for WhatsApp share button
+      document.getElementById('whatsappShare').addEventListener('click', () => {
+        shareWithWhatsApp(scores, dominant);
+      });
+      
+      // Scroll to results
+      setTimeout(() => {
+        resultDiv.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+      
+      // Show floating button
+      floatingBtn.classList.remove('hidden');
+      
+      // Add retake test event
+      document.getElementById('retakeTest').addEventListener('click', () => {
+        resetTest();
+      });
+    }
 
+    function resetTest() {
+      currentPage = 0;
+      answers = Array(questions.length).fill(null);
+      resultDiv.classList.add('d-none');
+      document.getElementById('quizForm').classList.remove('d-none');
+      renderQuestions();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      floatingBtn.classList.add('hidden');
+    }
+
+    document.getElementById('quizForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      savePageAnswers();
+
+      let scores = { visual: 0, auditivo: 0, cinestesico: 0 };
+
+      questions.forEach((q, index) => {
+        if (answers[index] !== null) {
+          const selectedOption = q.options[answers[index]];
+          scores[selectedOption.type]++;
+        }
+      });
+
+      document.getElementById('quizForm').classList.add('d-none');
+      resultDiv.classList.remove('d-none');
+      
+      renderResults(scores);
+    });
+
+    // Floating button functionality
+    floatingBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        floatingBtn.classList.remove('hidden');
+      } else {
+        floatingBtn.classList.add('hidden');
+      }
+    });
+
+    // Initialize
+    renderQuestions();
+  </script>
 </body>
-
 </html>
