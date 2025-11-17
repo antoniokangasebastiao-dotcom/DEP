@@ -187,6 +187,34 @@
       100% { transform: scale(1); }
     }
     
+    .share-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .share-btn {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border: none;
+      color: white;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .share-btn:hover {
+      background: linear-gradient(135deg, #128C7E, #075E54);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .whatsapp-icon {
+      margin-right: 8px;
+    }
+    
     @media (max-width: 768px) {
       .header {
         padding: 1.5rem;
@@ -200,40 +228,41 @@
         padding: 1rem;
       }
     }
+    
     .navbar-custom {
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-}
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
 
-.navbar-custom .navbar-brand,
-.navbar-custom .nav-link {
-  color: white;
-  font-weight: 500;
-}
+    .navbar-custom .navbar-brand,
+    .navbar-custom .nav-link {
+      color: white;
+      font-weight: 500;
+    }
 
-.navbar-custom .nav-link:hover {
-  color: rgba(255,255,255,0.8);
-}
+    .navbar-custom .nav-link:hover {
+      color: rgba(255,255,255,0.8);
+    }
 
-.dropdown-menu {
-  border: none;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  border-radius: 10px;
-}
+    .dropdown-menu {
+      border: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 10px;
+    }
 
-.dropdown-item {
-  padding: 0.5rem 1.5rem;
-}
+    .dropdown-item {
+      padding: 0.5rem 1.5rem;
+    }
 
-.dropdown-item:hover {
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-}
+    .dropdown-item:hover {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    }
 
-.sticky-top {
-  position: sticky;
-  top: 0;
-  z-index: 1020;
-}
+    .sticky-top {
+      position: sticky;
+      top: 0;
+      z-index: 1020;
+    }
   </style>
 </head>
 <body>
@@ -241,7 +270,7 @@
 <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
   <div class="container">
     <a class="navbar-brand" href="inicio.html">
-      <i class="bi bi-stars me-2"></i>Desenvolvimento Pessoal
+      <i class="bi bi-stars me-2"></i>DEP-Educação
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
       <span class="navbar-toggler-icon"></span>
@@ -369,6 +398,7 @@ const resultDiv = document.getElementById('result');
 let currentPage = 0;
 const questionsPerPage = 4;
 let answers = Array(questions.length).fill(null);
+let currentResults = null;
 
 function renderQuestions() {
   questionsDiv.innerHTML = '';
@@ -465,8 +495,71 @@ function getDominantTemperament(percentages) {
   };
 }
 
+function calculatePercentages(scores) {
+  // CORREÇÃO: Calcular baseado no total de perguntas respondidas "Sim"
+  const totalYesAnswers = Object.values(scores).reduce((a, b) => a + b, 0);
+  
+  const percentages = {};
+  for (let type in scores) {
+    // Se não houve respostas "Sim", distribuir igualmente
+    if (totalYesAnswers === 0) {
+      percentages[type] = (25).toFixed(1);
+    } else {
+      percentages[type] = ((scores[type] / totalYesAnswers) * 100).toFixed(1);
+    }
+  }
+  
+  // CORREÇÃO: Garantir que a soma seja 100%
+  const total = Object.values(percentages).reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+  if (Math.abs(total - 100) > 0.1) {
+    // Ajustar o maior valor para que a soma seja exatamente 100%
+    const dominantType = getDominantTemperament(percentages).type;
+    const adjustment = (100 - total).toFixed(1);
+    percentages[dominantType] = (parseFloat(percentages[dominantType]) + parseFloat(adjustment)).toFixed(1);
+  }
+  
+  return percentages;
+}
+
+function formatResultsForWhatsApp(percentages, dominant) {
+  const temperamentNames = {
+    colerico: "Colérico",
+    melancolico: "Melancólico",
+    sanguineo: "Sanguíneo",
+    fleumatico: "Fleumático"
+  };
+  
+  const dominantTemperament = temperamentNames[dominant.type];
+  const dominantPercentage = dominant.percentage;
+  
+  // Verificar se a soma é 100%
+  const total = Object.values(percentages).reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+  
+  let message = `🤖 *RESULTADO DO TESTE DE TEMPERAMENTO*\n\n`;
+  message += `🎯 *Seu temperamento predominante:* ${dominantTemperament} (${dominantPercentage}%)\n\n`;
+  message += `📊 *Seus resultados completos:*\n`;
+  message += `🔴 Colérico: ${percentages.colerico}%\n`;
+  message += `🔵 Melancólico: ${percentages.melancolico}%\n`;
+  message += `🟠 Sanguíneo: ${percentages.sanguineo}%\n`;
+  message += `🟢 Fleumático: ${percentages.fleumatico}%\n`;
+  message += `📈 *Total: ${total}%*\n\n`;
+  message += `💡 *Dica:* Use essas informações para personalizar sua conversa comigo sobre autoconhecimento e desenvolvimento pessoal!\n\n`;
+  message += `_Enviado via DEP - Desenvolvimento Pessoal_`;
+  
+  return message;
+}
+
+function shareWithWhatsApp(percentages, dominant) {
+  const message = formatResultsForWhatsApp(percentages, dominant);
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+  window.open(whatsappUrl, '_blank');
+}
+
 function renderResults(scores, percentages) {
-  const dominant = getDominantTemperament(percentages);
+  currentResults = { scores, percentages, dominant: getDominantTemperament(percentages) };
+  
+  const dominant = currentResults.dominant;
   const temperamentNames = {
     colerico: "Colérico",
     melancolico: "Melancólico",
@@ -499,6 +592,16 @@ function renderResults(scores, percentages) {
     
     <div class="chart-container">
       <canvas id="temperamentChart"></canvas>
+    </div>
+    
+    <div class="share-container">
+      <div class="text-center">
+        <h4 class="fw-bold mb-3">Compartilhar Resultados</h4>
+        <p class="mb-3">Compartilhe seus resultados com o ChatGPT do WhatsApp para ter uma conversa mais personalizada sobre autoconhecimento e desenvolvimento pessoal!</p>
+        <button id="whatsappShare" class="share-btn">
+          <i class="bi bi-whatsapp whatsapp-icon"></i> Compartilhar com WhatsApp
+        </button>
+      </div>
     </div>
     
     <div class="row g-4">
@@ -625,6 +728,11 @@ function renderResults(scores, percentages) {
     }
   });
   
+  // Add event listener for WhatsApp share button
+  document.getElementById('whatsappShare').addEventListener('click', () => {
+    shareWithWhatsApp(percentages, dominant);
+  });
+  
   // Scroll to results
   setTimeout(() => {
     resultDiv.scrollIntoView({ behavior: 'smooth' });
@@ -665,11 +773,8 @@ document.getElementById('quizForm').addEventListener('submit', function(event) {
     }
   });
 
-  const total = Object.values(scores).reduce((a, b) => a + b, 0);
-  const percentages = {};
-  for (let type in scores) {
-    percentages[type] = ((scores[type] / total) * 100).toFixed(1);
-  }
+  // CORREÇÃO: Usar a nova função para calcular porcentagens
+  const percentages = calculatePercentages(scores);
 
   document.getElementById('quizForm').classList.add('d-none');
   resultDiv.classList.remove('d-none');
@@ -695,4 +800,5 @@ renderQuestions();
 </script>
 
 </body>
+
 </html>
