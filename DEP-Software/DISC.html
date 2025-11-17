@@ -192,6 +192,34 @@
       margin-left: 8px;
     }
     
+    .share-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .share-btn {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border: none;
+      color: white;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .share-btn:hover {
+      background: linear-gradient(135deg, #128C7E, #075E54);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .whatsapp-icon {
+      margin-right: 8px;
+    }
+    
     @media (max-width: 768px) {
       .header {
         padding: 1.5rem;
@@ -205,40 +233,41 @@
         padding: 1rem;
       }
     }
+    
     .navbar-custom {
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-}
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
 
-.navbar-custom .navbar-brand,
-.navbar-custom .nav-link {
-  color: white;
-  font-weight: 500;
-}
+    .navbar-custom .navbar-brand,
+    .navbar-custom .nav-link {
+      color: white;
+      font-weight: 500;
+    }
 
-.navbar-custom .nav-link:hover {
-  color: rgba(255,255,255,0.8);
-}
+    .navbar-custom .nav-link:hover {
+      color: rgba(255,255,255,0.8);
+    }
 
-.dropdown-menu {
-  border: none;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  border-radius: 10px;
-}
+    .dropdown-menu {
+      border: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 10px;
+    }
 
-.dropdown-item {
-  padding: 0.5rem 1.5rem;
-}
+    .dropdown-item {
+      padding: 0.5rem 1.5rem;
+    }
 
-.dropdown-item:hover {
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-}
+    .dropdown-item:hover {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    }
 
-.sticky-top {
-  position: sticky;
-  top: 0;
-  z-index: 1020;
-}
+    .sticky-top {
+      position: sticky;
+      top: 0;
+      z-index: 1020;
+    }
   </style>
 </head>
 <body>
@@ -526,6 +555,7 @@ const resultDiv = document.getElementById('result');
 let currentPage = 0;
 const questionsPerPage = 4;
 let answers = Array(questions.length).fill(null);
+let currentResults = null;
 
 function renderQuestions() {
   questionsDiv.innerHTML = '';
@@ -624,8 +654,48 @@ function getDominantProfile(scores) {
   };
 }
 
+function formatResultsForWhatsApp(scores, dominant) {
+  const profileNames = {
+    dominance: "Dominância (D)",
+    influence: "Influência (I)",
+    steadiness: "Estabilidade (S)",
+    compliance: "Conformidade (C)"
+  };
+  
+  // Calculate percentages
+  const total = Object.values(scores).reduce((a, b) => a + b, 0);
+  const percentages = {};
+  for (let type in scores) {
+    percentages[type] = ((scores[type] / total) * 100).toFixed(1);
+  }
+  
+  const dominantProfile = profileNames[dominant.type];
+  const dominantPercentage = percentages[dominant.type];
+  
+  let message = `🤖 *RESULTADO DO TESTE DISC*\n\n`;
+  message += `🎯 *Seu perfil predominante:* ${dominantProfile} (${dominantPercentage}%)\n\n`;
+  message += `📊 *Seus resultados completos:*\n`;
+  message += `🔴 Dominância (D): ${percentages.dominance}%\n`;
+  message += `🟠 Influência (I): ${percentages.influence}%\n`;
+  message += `🟢 Estabilidade (S): ${percentages.steadiness}%\n`;
+  message += `🔵 Conformidade (C): ${percentages.compliance}%\n\n`;
+  message += `💡 *Dica:* Use essas informações para personalizar sua conversa comigo sobre desenvolvimento pessoal e profissional!\n\n`;
+  message += `_Enviado via DEP - Desbloqueio Estratégico de Potencial_`;
+  
+  return message;
+}
+
+function shareWithWhatsApp(scores, dominant) {
+  const message = formatResultsForWhatsApp(scores, dominant);
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+  window.open(whatsappUrl, '_blank');
+}
+
 function renderResults(scores) {
-  const dominant = getDominantProfile(scores);
+  currentResults = { scores, dominant: getDominantProfile(scores) };
+  
+  const dominant = currentResults.dominant;
   const profileNames = {
     dominance: "Dominância (D)",
     influence: "Influência (I)",
@@ -679,6 +749,16 @@ function renderResults(scores) {
     
     <div class="chart-container">
       <canvas id="profileChart"></canvas>
+    </div>
+    
+    <div class="share-container">
+      <div class="text-center">
+        <h4 class="fw-bold mb-3">Compartilhar Resultados</h4>
+        <p class="mb-3">Compartilhe seus resultados com o ChatGPT do WhatsApp para ter uma conversa mais personalizada sobre desenvolvimento pessoal e profissional!</p>
+        <button id="whatsappShare" class="share-btn">
+          <i class="bi bi-whatsapp whatsapp-icon"></i> Compartilhar com WhatsApp
+        </button>
+      </div>
     </div>
     
     <div class="row g-4">
@@ -821,6 +901,11 @@ function renderResults(scores) {
     }
   });
   
+  // Add event listener for WhatsApp share button
+  document.getElementById('whatsappShare').addEventListener('click', () => {
+    shareWithWhatsApp(scores, dominant);
+  });
+  
   // Scroll to results
   setTimeout(() => {
     resultDiv.scrollIntoView({ behavior: 'smooth' });
@@ -884,6 +969,3 @@ renderQuestions();
 </body>
 
 </html>
-
-
-
