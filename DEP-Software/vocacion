@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teste de Orientação Vocacional - DEP</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --realista: #e74c3c;
+      --investigativo: #3498db;
+      --artistico: #9b59b6;
+      --social: #2ecc71;
+      --empreendedor: #f39c12;
+      --convencional: #34495e;
+      --light-bg: #f8f9fa;
+      --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light-bg);
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+    }
+    
+    .header {
+      background: var(--primary-gradient);
+      color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .progress-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .progress {
+      height: 12px;
+      background-color: #e9ecef;
+      border-radius: 6px;
+    }
+    
+    .progress-bar {
+      background: var(--primary-gradient);
+      transition: width 0.6s ease;
+    }
+    
+    .question-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .question-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    .form-check-input:checked {
+      background-color: #6a11cb;
+      border-color: #6a11cb;
+    }
+    
+    .btn-primary {
+      background: var(--primary-gradient);
+      border: none;
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #5a0bb5, #1a66e0);
+    }
+    
+    .btn-outline-secondary {
+      padding: 0.5rem 1.5rem;
+      font-weight: 500;
+    }
+    
+    .result-container {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--card-shadow);
+      animation: fadeIn 0.8s ease;
+    }
+    
+    .vocational-card {
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+    
+    .vocational-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .realista-card {
+      background: linear-gradient(135deg, var(--realista), #c0392b);
+    }
+    
+    .investigativo-card {
+      background: linear-gradient(135deg, var(--investigativo), #2980b9);
+    }
+    
+    .artistico-card {
+      background: linear-gradient(135deg, var(--artistico), #8e44ad);
+    }
+    
+    .social-card {
+      background: linear-gradient(135deg, var(--social), #27ae60);
+    }
+    
+    .empreendedor-card {
+      background: linear-gradient(135deg, var(--empreendedor), #d35400);
+    }
+    
+    .convencional-card {
+      background: linear-gradient(135deg, var(--convencional), #2c3e50);
+    }
+    
+    .dominant-badge {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #ff9a00, #ff6b00);
+      color: white;
+      font-weight: 600;
+    }
+    
+    .secondary-badge {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #6c757d, #495057);
+      color: white;
+      font-weight: 500;
+    }
+    
+    .ranking-badge {
+      font-size: 0.8rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 50px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-weight: 500;
+      margin-left: 0.5rem;
+    }
+    
+    .chart-container {
+      height: 300px;
+      margin: 2rem 0;
+    }
+    
+    .trait-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    
+    .trait-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .trait-list li:last-child {
+      border-bottom: none;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .floating-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 99;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .option-label {
+      font-weight: 500;
+      margin-left: 8px;
+    }
+    
+    .share-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .share-btn {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border: none;
+      color: white;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .share-btn:hover {
+      background: linear-gradient(135deg, #128C7E, #075E54);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .whatsapp-icon {
+      margin-right: 8px;
+    }
+    
+    .ranking-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .ranking-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      border-bottom: 1px solid #e9ecef;
+      transition: background-color 0.2s ease;
+    }
+    
+    .ranking-item:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .ranking-item:last-child {
+      border-bottom: none;
+    }
+    
+    .ranking-position {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--primary-gradient);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      margin-right: 1rem;
+    }
+    
+    .ranking-info {
+      flex: 1;
+    }
+    
+    .ranking-percentage {
+      font-weight: 600;
+      color: #495057;
+    }
+    
+    .career-match {
+      font-size: 0.9rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.2);
+      margin-left: 0.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .header {
+        padding: 1.5rem;
+      }
+      
+      .question-card, .result-container {
+        padding: 1.25rem;
+      }
+      
+      .vocational-card {
+        padding: 1rem;
+      }
+    }
+    
+    .navbar-custom {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+
+    .navbar-custom .navbar-brand,
+    .navbar-custom .nav-link {
+      color: white;
+      font-weight: 500;
+    }
+
+    .navbar-custom .nav-link:hover {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .dropdown-menu {
+      border: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 10px;
+    }
+
+    .dropdown-item {
+      padding: 0.5rem 1.5rem;
+    }
+
+    .dropdown-item:hover {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    }
+
+    .sticky-top {
+      position: sticky;
+      top: 0;
+      z-index: 1020;
+    }
+    
+    .total-percentage {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #495057;
+      margin-top: 0.5rem;
+    }
+    
+    .highlight-card {
+      border: 3px solid #ffc107;
+      box-shadow: 0 6px 25px rgba(255, 193, 7, 0.3);
+    }
+    
+    .scientific-badge {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.9);
+      color: #2c3e50;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+   <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <i class="bi bi-stars me-2"></i>DEP-Educação
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-clipboard-check me-2"></i>Testes
+          </a>
+           <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="temperamento.html">
+                <i class="bi bi-emoji-smile me-2"></i>Temperamento
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="DISC.html">
+                <i class="bi bi-person-lines-fill me-2"></i>Perfil DISC
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="amor.html">
+                <i class="bi bi-heart-fill me-2"></i>Linguagem do Amor
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="canal.html">
+                <i class="bi bi-book-half me-2"></i>Canal de Aprendizagem
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="inteligencia.html">
+                <i class="bi bi-lightbulb me-2"></i>Inteligências Múltiplas
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="vocacional.html">
+                <i class="bi bi-briefcase me-2"></i>Orientação Vocacional
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-4">
+  <div class="header text-center">
+    <h1 class="fw-bold mb-3">Teste de Orientação Vocacional</h1>
+    <p class="mb-0">Descubra suas áreas de interesse profissional baseado no modelo RIASEC de Holland</p>
+    <small class="opacity-75">Baseado em 50+ anos de pesquisa científica validada</small>
+  </div>
+
+  <div class="progress-container">
+    <div class="d-flex justify-content-between mb-2">
+      <span>Progresso</span>
+      <span id="progressText">0%</span>
+    </div>
+    <div class="progress">
+      <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <form id="quizForm">
+    <div id="questions"></div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <button type="button" class="btn btn-outline-secondary" id="prevBtn" disabled>
+        <i class="bi bi-arrow-left"></i> Anterior
+      </button>
+      <button type="button" class="btn btn-primary" id="nextBtn">
+        Próximo <i class="bi bi-arrow-right"></i>
+      </button>
+      <button type="submit" class="btn btn-success hidden" id="submitBtn">
+        <i class="bi bi-check-circle"></i> Ver Resultados
+      </button>
+    </div>
+  </form>
+
+  <div id="result" class="result-container d-none">
+    <!-- Result content will be inserted here -->
+  </div>
+</div>
+
+<!-- Floating button for quick navigation -->
+<button id="floatingBtn" class="floating-btn btn btn-primary hidden">
+  <i class="bi bi-arrow-up"></i>
+</button>
+
+<!-- Chart.js for results visualization -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// Baseado no modelo RIASEC de John Holland - Validado cientificamente
+const questions = [
+  // Realista (R) - 6 questões
+  { 
+    text: "Você gosta de trabalhar com ferramentas e equipamentos?", 
+    options: [
+      { text: "Sim, muito", type: "realista", value: 2 },
+      { text: "Às vezes", type: "realista", value: 1 },
+      { text: "Não gosto", type: "realista", value: 0 }
+    ]
+  },
+  { 
+    text: "Prefere atividades manuais e concretas?", 
+    options: [
+      { text: "Sim, prefiro fazer coisas práticas", type: "realista", value: 2 },
+      { text: "Depende da situação", type: "realista", value: 1 },
+      { text: "Prefiro atividades intelectuais", type: "realista", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem habilidade para consertar objetos ou montar coisas?", 
+    options: [
+      { text: "Sim, sou bom nisso", type: "realista", value: 2 },
+      { text: "Mais ou menos", type: "realista", value: 1 },
+      { text: "Não tenho habilidade", type: "realista", value: 0 }
+    ]
+  },
+  { 
+    text: "Gosta de atividades ao ar livre?", 
+    options: [
+      { text: "Adoro", type: "realista", value: 2 },
+      { text: "Gosto às vezes", type: "realista", value: 1 },
+      { text: "Prefiro ambientes fechados", type: "realista", value: 0 }
+    ]
+  },
+  { 
+    text: "Prefere trabalhar com coisas em vez de pessoas?", 
+    options: [
+      { text: "Sim, definitivamente", type: "realista", value: 2 },
+      { text: "Depende do contexto", type: "realista", value: 1 },
+      { text: "Prefiro trabalhar com pessoas", type: "realista", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem interesse por mecânica ou eletrônica?", 
+    options: [
+      { text: "Muito interesse", type: "realista", value: 2 },
+      { text: "Um pouco", type: "realista", value: 1 },
+      { text: "Nenhum interesse", type: "realista", value: 0 }
+    ]
+  },
+
+  // Investigativo (I) - 6 questões
+  { 
+    text: "Você gosta de resolver problemas complexos?", 
+    options: [
+      { text: "Adoro desafios intelectuais", type: "investigativo", value: 2 },
+      { text: "Às vezes", type: "investigativo", value: 1 },
+      { text: "Prefiro problemas simples", type: "investigativo", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem curiosidade científica?", 
+    options: [
+      { text: "Sim, muita curiosidade", type: "investigativo", value: 2 },
+      { text: "Um pouco", type: "investigativo", value: 1 },
+      { text: "Pouca curiosidade", type: "investigativo", value: 0 }
+    ]
+  },
+  { 
+    text: "Gosta de pesquisar e investigar temas?", 
+    options: [
+      { text: "Adoro pesquisar", type: "investigativo", value: 2 },
+      { text: "Gosto ocasionalmente", type: "investigativo", value: 1 },
+      { text: "Não gosto de pesquisar", type: "investigativo", value: 0 }
+    ]
+  },
+  { 
+    text: "Prefere trabalhar sozinho em projetos intelectuais?", 
+    options: [
+      { text: "Sim, prefiro", type: "investigativo", value: 2 },
+      { text: "Às vezes", type: "investigativo", value: 1 },
+      { text: "Prefiro trabalhar em equipe", type: "investigativo", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem interesse por matemática ou ciências?", 
+    options: [
+      { text: "Muito interesse", type: "investigativo", value: 2 },
+      { text: "Interesse moderado", type: "investigativo", value: 1 },
+      { text: "Pouco interesse", type: "investigativo", value: 0 }
+    ]
+  },
+  { 
+    text: "Gosta de analisar dados e informações?", 
+    options: [
+      { text: "Adoro análise de dados", type: "investigativo", value: 2 },
+      { text: "Gosto às vezes", type: "investigativo", value: 1 },
+      { text: "Não gosto", type: "investigativo", value: 0 }
+    ]
+  },
+
+  // Artístico (A) - 6 questões
+  { 
+    text: "Você gosta de expressar-se criativamente?", 
+    options: [
+      { text: "Sim, muito", type: "artistico", value: 2 },
+      { text: "Às vezes", type: "artistico", value: 1 },
+      { text: "Raramente", type: "artistico", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem interesse por artes visuais, música ou teatro?", 
+    options: [
+      { text: "Muito interesse", type: "artistico", value: 2 },
+      { text: "Interesse moderado", type: "artistico", value: 1 },
+      { text: "Pouco interesse", type: "artistico", value: 0 }
+    ]
+  },
+  { 
+    text: "Prefere ambientes de trabalho flexíveis e não convencionais?", 
+    options: [
+      { text: "Sim, prefiro liberdade", type: "artistico", value: 2 },
+      { text: "Às vezes", type: "artistico", value: 1 },
+      { text: "Prefiro estrutura", type: "artistico", value: 0 }
+    ]
+  },
+  { 
+    text: "Gosta de criar coisas originais?", 
+    options: [
+      { text: "Adoro criar", type: "artistico", value: 2 },
+      { text: "Gosto ocasionalmente", type: "artistico", value: 1 },
+      { text: "Prefiro seguir padrões", type: "artistico", value: 0 }
+    ]
+  },
+  { 
+    text: "Valora a expressão pessoal e a originalidade?", 
+    options: [
+      { text: "Muito importante para mim", type: "artistico", value: 2 },
+      { text: "Importante às vezes", type: "artistico", value: 1 },
+      { text: "Não é prioritário", type: "artistico", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem habilidade para desenhar, escrever ou tocar instrumentos?", 
+    options: [
+      { text: "Sim, tenho habilidades artísticas", type: "artistico", value: 2 },
+      { text: "Habilidades básicas", type: "artistico", value: 1 },
+      { text: "Não tenho habilidades artísticas", type: "artistico", value: 0 }
+    ]
+  },
+
+  // Social (S) - 6 questões
+  { 
+    text: "Você gosta de ajudar outras pessoas?", 
+    options: [
+      { text: "Sim, muito", type: "social", value: 2 },
+      { text: "Às vezes", type: "social", value: 1 },
+      { text: "Raramente", type: "social", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem facilidade para trabalhar em equipe?", 
+    options: [
+      { text: "Sim, trabalho muito bem em equipe", type: "social", value: 2 },
+      { text: "Mais ou menos", type: "social", value: 1 },
+      { text: "Prefiro trabalhar sozinho", type: "social", value: 0 }
+    ]
+  },
+  { 
+    text: "Gosta de ensinar ou orientar outras pessoas?", 
+    options: [
+      { text: "Adoro ensinar", type: "social", value: 2 },
+      { text: "Gosto às vezes", type: "social", value: 1 },
+      { text: "Não gosto", type: "social", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem empatia e compreensão pelos outros?", 
+    options: [
+      { text: "Sim, muita empatia", type: "social", value: 2 },
+      { text: "Tenho alguma empatia", type: "social", value: 1 },
+      { text: "Sou mais racional", type: "social", value: 0 }
+    ]
+  },
+  { 
+    text: "Prefere atividades que envolvam contato com pessoas?", 
+    options: [
+      { text: "Sim, prefiro", type: "social", value: 2 },
+      { text: "Depende da situação", type: "social", value: 1 },
+      { text: "Prefiro atividades individuais", type: "social", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem habilidade para resolver conflitos entre pessoas?", 
+    options: [
+      { text: "Sim, sou bom mediador", type: "social", value: 2 },
+      { text: "Às vezes consigo", type: "social", value: 1 },
+      { text: "Tenho dificuldade", type: "social", value: 0 }
+    ]
+  },
+
+  // Empreendedor (E) - 6 questões
+  { 
+    text: "Você gosta de liderar e influenciar pessoas?", 
+    options: [
+      { text: "Sim, gosto de liderar", type: "empreendedor", value: 2 },
+      { text: "Às vezes", type: "empreendedor", value: 1 },
+      { text: "Prefiro não liderar", type: "empreendedor", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem espírito empreendedor?", 
+    options: [
+      { text: "Sim, muito", type: "empreendedor", value: 2 },
+      { text: "Um pouco", type: "empreendedor", value: 1 },
+      { text: "Não tenho", type: "empreendedor", value: 0 }
+    ]
+  },
+  { 
+    text: "Gosta de correr riscos calculados?", 
+    options: [
+      { text: "Sim, gosto de desafios", type: "empreendedor", value: 2 },
+      { text: "Às vezes", type: "empreendedor", value: 1 },
+      { text: "Prefiro segurança", type: "empreendedor", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem habilidade para persuadir e negociar?", 
+    options: [
+      { text: "Sim, sou persuasivo", type: "empreendedor", value: 2 },
+      { text: "Habilidade moderada", type: "empreendedor", value: 1 },
+      { text: "Não sou persuasivo", type: "empreendedor", value: 0 }
+    ]
+  },
+  { 
+    text: "Gosta de ambientes competitivos?", 
+    options: [
+      { text: "Adoro competição", type: "empreendedor", value: 2 },
+      { text: "Gosto às vezes", type: "empreendedor", value: 1 },
+      { text: "Prefiro cooperação", type: "empreendedor", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem iniciativa para começar projetos?", 
+    options: [
+      { text: "Sim, muita iniciativa", type: "empreendedor", value: 2 },
+      { text: "Às vezes tomo iniciativa", type: "empreendedor", value: 1 },
+      { text: "Prefiro que outros comecem", type: "empreendedor", value: 0 }
+    ]
+  },
+
+  // Convencional (C) - 6 questões
+  { 
+    text: "Você gosta de organização e estrutura?", 
+    options: [
+      { text: "Sim, muito", type: "convencional", value: 2 },
+      { text: "Gosto moderadamente", type: "convencional", value: 1 },
+      { text: "Prefiro flexibilidade", type: "convencional", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem atenção aos detalhes?", 
+    options: [
+      { text: "Sim, sou muito detalhista", type: "convencional", value: 2 },
+      { text: "Às vezes", type: "convencional", value: 1 },
+      { text: "Sou mais generalista", type: "convencional", value: 0 }
+    ]
+  },
+  { 
+    text: "Prefere seguir procedimentos estabelecidos?", 
+    options: [
+      { text: "Sim, prefiro", type: "convencional", value: 2 },
+      { text: "Depende da situação", type: "convencional", value: 1 },
+      { text: "Prefiro criar meus próprios métodos", type: "convencional", value: 0 }
+    ]
+  },
+  { 
+    text: "Gosta de trabalhar com números e dados?", 
+    options: [
+      { text: "Adoro trabalhar com dados", type: "convencional", value: 2 },
+      { text: "Gosto ocasionalmente", type: "convencional", value: 1 },
+      { text: "Não gosto", type: "convencional", value: 0 }
+    ]
+  },
+  { 
+    text: "Tem habilidade para trabalhos administrativos?", 
+    options: [
+      { text: "Sim, sou bom nisso", type: "convencional", value: 2 },
+      { text: "Habilidade razoável", type: "convencional", value: 1 },
+      { text: "Não tenho habilidade", type: "convencional", value: 0 }
+    ]
+  },
+  { 
+    text: "Valora estabilidade e segurança no trabalho?", 
+    options: [
+      { text: "Sim, muito importante", type: "convencional", value: 2 },
+      { text: "Importante", type: "convencional", value: 1 },
+      { text: "Não é prioritário", type: "convencional", value: 0 }
+    ]
+  }
+];
+
+const questionsDiv = document.getElementById('questions');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const submitBtn = document.getElementById('submitBtn');
+const floatingBtn = document.getElementById('floatingBtn');
+const resultDiv = document.getElementById('result');
+
+let currentPage = 0;
+const questionsPerPage = 6;
+let answers = Array(questions.length).fill(null);
+let currentResults = null;
+
+function renderQuestions() {
+  questionsDiv.innerHTML = '';
+  const start = currentPage * questionsPerPage;
+  const end = Math.min(start + questionsPerPage, questions.length);
+
+  for (let i = start; i < end; i++) {
+    const q = questions[i];
+    let optionsHtml = '';
+    
+    q.options.forEach((option, idx) => {
+      const isChecked = answers[i] === idx;
+      optionsHtml += `
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="q${i}" id="q${i}-${idx}" value="${idx}" ${isChecked ? 'checked' : ''} required>
+          <label class="form-check-label option-label" for="q${i}-${idx}">${option.text}</label>
+        </div>
+      `;
+    });
+    
+    questionsDiv.innerHTML += `
+      <div class="question-card">
+        <h5 class="fw-semibold mb-3">${i + 1}. ${q.text}</h5>
+        ${optionsHtml}
+      </div>
+    `;
+  }
+
+  updateProgress();
+  prevBtn.disabled = currentPage === 0;
+  nextBtn.classList.toggle('hidden', end === questions.length);
+  submitBtn.classList.toggle('hidden', end !== questions.length);
+}
+
+function updateProgress() {
+  const totalPages = Math.ceil(questions.length / questionsPerPage);
+  const progress = ((currentPage + 1) / totalPages) * 100;
+  progressBar.style.width = progress + '%';
+  progressText.textContent = Math.round(progress) + '% completado';
+}
+
+function savePageAnswers() {
+  const start = currentPage * questionsPerPage;
+  const end = Math.min(start + questionsPerPage, questions.length);
+
+  for (let i = start; i < end; i++) {
+    const checkedRadio = document.querySelector(`input[name="q${i}"]:checked`);
+    if (checkedRadio) {
+      answers[i] = parseInt(checkedRadio.value);
+    }
+  }
+}
+
+nextBtn.addEventListener('click', () => {
+  if (validatePage()) {
+    savePageAnswers();
+    currentPage++;
+    renderQuestions();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+prevBtn.addEventListener('click', () => {
+  savePageAnswers();
+  currentPage--;
+  renderQuestions();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+function validatePage() {
+  const start = currentPage * questionsPerPage;
+  const end = Math.min(start + questionsPerPage, questions.length);
+
+  for (let i = start; i < end; i++) {
+    const radios = document.getElementsByName(`q${i}`);
+    if (![...radios].some(r => r.checked)) {
+      alert('Por favor, responda todas as perguntas desta página antes de continuar.');
+      return false;
+    }
+  }
+  return true;
+}
+
+// Função para obter ranking ordenado dos tipos vocacionais
+function getVocationalRanking(scores, percentages) {
+  const typeNames = {
+    realista: "Realista (R)",
+    investigativo: "Investigativo (I)", 
+    artistico: "Artístico (A)",
+    social: "Social (S)",
+    empreendedor: "Empreendedor (E)",
+    convencional: "Convencional (C)"
+  };
+
+  // Criar array com todos os tipos e suas pontuações
+  const ranking = Object.keys(scores).map(type => ({
+    type: type,
+    name: typeNames[type],
+    score: scores[type],
+    percentage: parseFloat(percentages[type])
+  }));
+
+  // Ordenar por percentagem (maior para menor)
+  ranking.sort((a, b) => b.percentage - a.percentage);
+
+  return ranking;
+}
+
+function calculatePercentages(scores) {
+  // Calcular o total de pontos obtidos em todos os tipos
+  const totalScore = Object.values(scores).reduce((sum, score) => sum + score, 0);
+  
+  const percentages = {};
+  
+  // Se não há pontuação total (todas respostas zero), distribuir igualmente
+  if (totalScore === 0) {
+    const equalPercentage = (100 / Object.keys(scores).length).toFixed(1);
+    for (let type in scores) {
+      percentages[type] = equalPercentage;
+    }
+  } else {
+    // Calcular percentagem relativa ao total de pontos
+    for (let type in scores) {
+      percentages[type] = ((scores[type] / totalScore) * 100).toFixed(1);
+    }
+    
+    // Garantir que a soma seja exatamente 100%
+    const totalPercentage = Object.values(percentages).reduce((sum, p) => sum + parseFloat(p), 0);
+    
+    if (Math.abs(totalPercentage - 100) > 0.1) {
+      // Ajustar o tipo dominante para compensar a diferença
+      const dominantType = getVocationalRanking(scores, percentages)[0].type;
+      const adjustment = (100 - totalPercentage).toFixed(1);
+      percentages[dominantType] = (parseFloat(percentages[dominantType]) + parseFloat(adjustment)).toFixed(1);
+    }
+  }
+  
+  return percentages;
+}
+
+function getCareerMatchLevel(percentage) {
+  if (percentage >= 20) return "Alto";
+  if (percentage >= 15) return "Bom";
+  if (percentage >= 10) return "Moderado";
+  return "Baixo";
+}
+
+function formatResultsForWhatsApp(percentages, ranking) {
+  let message = `🎓 *RESULTADO DO TESTE DE ORIENTAÇÃO VOCACIONAL*\n\n`;
+  
+  // Tipo predominante
+  message += `🎯 *Área Predominante:* ${ranking[0].name} (${ranking[0].percentage}%)\n`;
+  
+  // Tipo secundário (se houver diferença significativa)
+  if (ranking.length > 1 && ranking[1].percentage > 10) {
+    message += `🥈 *Área Secundária:* ${ranking[1].name} (${ranking[1].percentage}%)\n`;
+  }
+  
+  message += `\n📊 *Ranking Completo (Modelo RIASEC):*\n`;
+  
+  ranking.forEach((type, index) => {
+    const emoji = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "▫️";
+    message += `${emoji} ${type.name}: ${type.percentage}%\n`;
+  });
+  
+  message += `\n💡 *Próximos Passos:* Use essas informações para pesquisar carreiras específicas e conversar com profissionais das áreas sugeridas!\n\n`;
+  message += `_Enviado via DEP - Desbloqueio Estratégico de Potencial_`;
+  
+  return message;
+}
+
+function shareWithWhatsApp(percentages, ranking) {
+  const message = formatResultsForWhatsApp(percentages, ranking);
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+  window.open(whatsappUrl, '_blank');
+}
+
+function renderResults(scores, percentages) {
+  const ranking = getVocationalRanking(scores, percentages);
+  const dominant = ranking[0];
+  const secondary = ranking[1];
+  
+  currentResults = { scores, percentages, ranking, dominant, secondary };
+  
+  const typeNames = {
+    realista: "Realista (R)",
+    investigativo: "Investigativo (I)",
+    artistico: "Artístico (A)",
+    social: "Social (S)",
+    empreendedor: "Empreendedor (E)",
+    convencional: "Convencional (C)"
+  };
+  
+  const typeDescriptions = {
+    realista: "Pessoas práticas, realistas, que gostam de trabalhar com ferramentas, máquinas e objetos. Preferem atividades concretas e manuais. São estáveis, persistentes e gostam de resultados tangíveis.",
+    investigativo: "Pessoas analíticas, intelectuais, curiosas e metódicas. Gostam de observar, aprender, investigar e resolver problemas. Preferem trabalhar com ideias e informações.",
+    artistico: "Pessoas criativas, originais, inovadoras e expressivas. Valorizam a liberdade, a autoexpressão e a estética. Gostam de trabalhar em ambientes flexíveis e não convencionais.",
+    social: "Pessoas cooperativas, solidárias, compreensivas e empáticas. Gostam de ajudar, ensinar, orientar e cuidar de outros. Preferem trabalhar com pessoas em vez de coisas.",
+    empreendedor: "Pessoas ambiciosas, energéticas, dominantes e persuasivas. Gostam de liderar, influenciar, persuadir e realizar. Preferem ambientes competitivos e desafiadores.",
+    convencional: "Pessoas organizadas, metódicas, precisas e cuidadosas. Gostam de estrutura, ordem, rotina e procedimentos estabelecidos. Preferem trabalhar com dados e informações."
+  };
+  
+  const careerExamples = {
+    realista: ["Engenheiro Civil", "Arquiteto", "Piloto", "Mecânico", "Eletricista", "Agricultor", "Veterinário"],
+    investigativo: ["Pesquisador Científico", "Médico", "Farmacêutico", "Estatístico", "Programador", "Matemático", "Físico"],
+    artistico: ["Designer", "Artista Plástico", "Músico", "Ator", "Escritor", "Publicitário", "Fotógrafo"],
+    social: ["Professor", "Psicólogo", "Assistente Social", "Enfermeiro", "Médico", "Coach", "Terapeuta"],
+    empreendedor: ["Empresário", "Advogado", "Politico", "Vendedor", "Gerente", "Consultor", "Jornalista"],
+    convencional: ["Contador", "Secretário", "Analista de Dados", "Bibliotecário", "Auditor", "Administrador", "Arquivista"]
+  };
+
+  const workEnvironments = {
+    realista: "Ambientes práticos, oficinas, construções, áreas externas",
+    investigativo: "Laboratórios, universidades, centros de pesquisa, escritórios técnicos",
+    artistico: "Estúdios, teatros, redações, ambientes criativos flexíveis",
+    social: "Escolas, hospitais, clínicas, instituições de ajuda, comunidades",
+    empreendedor: "Escritórios executivos, salas de reunião, ambientes corporativos dinâmicos",
+    convencional: "Escritórios organizados, ambientes estruturados com procedimentos claros"
+  };
+  
+  // Calcular total para exibição
+  const totalPercentage = Object.values(percentages).reduce((sum, p) => sum + parseFloat(p), 0);
+  
+  // Create results HTML
+  resultDiv.innerHTML = `
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Seu Perfil Vocacional RIASEC</h2>
+      <p class="lead">Baseado no modelo científico de John Holland</p>
+      <span class="scientific-badge">Validado por 50+ anos de pesquisa</span>
+      
+      <div class="row justify-content-center mt-4">
+        <div class="col-md-6 mb-3">
+          <div class="p-3 bg-warning bg-opacity-10 rounded">
+            <h4 class="fw-bold text-warning">🥇 Área Predominante</h4>
+            <span class="dominant-badge">${dominant.name}</span>
+            <div class="mt-2">${dominant.percentage}% - Compatibilidade ${getCareerMatchLevel(dominant.percentage)}</div>
+          </div>
+        </div>
+        
+        ${secondary && secondary.percentage > 10 ? `
+        <div class="col-md-6 mb-3">
+          <div class="p-3 bg-secondary bg-opacity-10 rounded">
+            <h4 class="fw-bold text-secondary">🥈 Área Secundária</h4>
+            <span class="secondary-badge">${secondary.name}</span>
+            <div class="mt-2">${secondary.percentage}% - Compatibilidade ${getCareerMatchLevel(secondary.percentage)}</div>
+          </div>
+        </div>
+        ` : ''}
+      </div>
+      
+      <div class="total-percentage">
+        <i class="bi bi-check-circle me-1"></i> Soma total: ${totalPercentage.toFixed(1)}%
+      </div>
+    </div>
+    
+    <div class="ranking-container">
+      <h4 class="fw-bold mb-3">📈 Seu Código RIASEC</h4>
+      <p class="text-muted mb-3">O código de 3 letras representa suas áreas de maior interesse profissional</p>
+      <div class="text-center mb-4">
+        <h2 class="display-6 fw-bold text-primary">${ranking[0].name.charAt(0)}${ranking[1] ? ranking[1].name.charAt(0) : ''}${ranking[2] ? ranking[2].name.charAt(0) : ''}</h2>
+        <small class="text-muted">Seu código vocacional de 3 letras</small>
+      </div>
+      
+      ${ranking.map((type, index) => `
+        <div class="ranking-item">
+          <div class="ranking-position">${index + 1}</div>
+          <div class="ranking-info">
+            <strong>${type.name}</strong>
+            <div class="text-muted small">${typeDescriptions[type.type]}</div>
+          </div>
+          <div class="ranking-percentage">
+            ${type.percentage}%
+            <span class="career-match">${getCareerMatchLevel(type.percentage)}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    
+    <div class="chart-container">
+      <canvas id="vocationalChart"></canvas>
+    </div>
+    
+    <div class="share-container">
+      <div class="text-center">
+        <h4 class="fw-bold mb-3">Compartilhar Resultados</h4>
+        <p class="mb-3">Compartilhe seus resultados com orientadores profissionais ou converse sobre possíveis carreiras!</p>
+        <button id="whatsappShare" class="share-btn">
+          <i class="bi bi-whatsapp whatsapp-icon"></i> Compartilhar com WhatsApp
+        </button>
+      </div>
+    </div>
+    
+    <h4 class="fw-bold mt-5 mb-3">💼 Carreiras Recomendadas por Área</h4>
+    
+    <div class="row g-4">
+      ${ranking.slice(0, 3).map((type, index) => {
+        const cardClass = index === 0 ? 'highlight-card' : '';
+        return `
+        <div class="col-md-6 col-lg-4">
+          <div class="vocational-card ${type.type}-card ${cardClass}">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="fw-bold mb-0">${type.name}</h5>
+              <div>
+                <span class="badge bg-light text-dark">${type.percentage}%</span>
+                <span class="ranking-badge">#${index + 1}</span>
+              </div>
+            </div>
+            <p class="small">${typeDescriptions[type.type]}</p>
+            
+            <h6 class="mt-3 fw-semibold">Carreiras Recomendadas:</h6>
+            <ul class="trait-list small">
+              ${careerExamples[type.type].slice(0, 4).map(career => `<li>${career}</li>`).join('')}
+            </ul>
+            
+            <h6 class="mt-3 fw-semibold">Ambientes de Trabalho:</h6>
+            <div class="small">${workEnvironments[type.type]}</div>
+          </div>
+        </div>
+        `;
+      }).join('')}
+    </div>
+    
+    <div class="mt-4 p-4 bg-light rounded">
+      <h4 class="fw-bold">🧠 Sobre o Modelo RIASEC</h4>
+      <p>Desenvolvido pelo psicólogo John L. Holland na década de 1950, o modelo RIASEC é uma das teorias de orientação vocacional mais validadas cientificamente no mundo.</p>
+      
+      <h5 class="fw-bold mt-3">📊 Base Científica:</h5>
+      <ul>
+        <li><strong>50+ anos de pesquisa</strong> comprovando sua eficácia</li>
+        <li>Validado em <strong>40+ países</strong> e diversas culturas</li>
+        <li>Meta-análises com <strong>+500 estudos</strong> científicos</li>
+        <li>Alta correlação com <strong>satisfação profissional</strong> (r = 0.30-0.45)</li>
+      </ul>
+      
+      <h5 class="fw-bold mt-3">🎯 Como Usar Esses Resultados:</h5>
+      <ol>
+        <li><strong>Pesquise carreiras</strong> nas suas áreas predominantes</li>
+        <li><strong>Converse com profissionais</strong> que atuam nessas áreas</li>
+        <li><strong>Experimente</strong> através de estágios ou projetos</li>
+        <li><strong>Considere combinações</strong> entre suas áreas de interesse</li>
+        <li><strong>Busque orientação profissional</strong> para aprofundar a análise</li>
+      </ol>
+      
+      <p class="mb-0 mt-3"><strong>Lembre-se:</strong> Este teste é um ponto de partida científico. A escolha final deve considerar também mercado de trabalho, oportunidades locais e suas circunstâncias pessoais.</p>
+    </div>
+    
+    <div class="text-center mt-4">
+      <button id="retakeTest" class="btn btn-primary">
+        <i class="bi bi-arrow-repeat"></i> Refazer Teste
+      </button>
+    </div>
+  `;
+  
+  // Initialize chart
+  const ctx = document.getElementById('vocationalChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ranking.map(type => type.name),
+      datasets: [{
+        label: 'Compatibilidade com a Área (%)',
+        data: ranking.map(type => type.percentage),
+        backgroundColor: ranking.map((type, index) => 
+          index === 0 ? 'rgba(255, 193, 7, 0.8)' :
+          index === 1 ? 'rgba(108, 117, 125, 0.8)' :
+          index === 2 ? 'rgba(148, 117, 98, 0.8)' :
+          `rgba(${52 + index * 20}, ${152 - index * 10}, ${219 - index * 15}, 0.7)`
+        ),
+        borderColor: ranking.map((type, index) => 
+          index === 0 ? 'rgba(255, 193, 7, 1)' :
+          index === 1 ? 'rgba(108, 117, 125, 1)' :
+          index === 2 ? 'rgba(148, 117, 98, 1)' :
+          `rgba(${52 + index * 20}, ${152 - index * 10}, ${219 - index * 15}, 1)`
+        ),
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 100,
+          ticks: {
+            callback: function(value) {
+              return value + '%';
+            }
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const index = context.dataIndex;
+              const rank = index + 1;
+              return `${context.parsed.y}% - Posição #${rank} - ${getCareerMatchLevel(context.parsed.y)}`;
+            }
+          }
+        }
+      }
+    }
+  });
+  
+  // Add event listener for WhatsApp share button
+  document.getElementById('whatsappShare').addEventListener('click', () => {
+    shareWithWhatsApp(percentages, ranking);
+  });
+  
+  // Scroll to results
+  setTimeout(() => {
+    resultDiv.scrollIntoView({ behavior: 'smooth' });
+  }, 300);
+  
+  // Show floating button
+  floatingBtn.classList.remove('hidden');
+  
+  // Add retake test event
+  document.getElementById('retakeTest').addEventListener('click', () => {
+    resetTest();
+  });
+}
+
+function resetTest() {
+  currentPage = 0;
+  answers = Array(questions.length).fill(null);
+  resultDiv.classList.add('d-none');
+  document.getElementById('quizForm').classList.remove('d-none');
+  renderQuestions();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  floatingBtn.classList.add('hidden');
+}
+
+document.getElementById('quizForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  savePageAnswers();
+
+  let scores = { 
+    realista: 0, 
+    investigativo: 0, 
+    artistico: 0, 
+    social: 0,
+    empreendedor: 0,
+    convencional: 0
+  };
+
+  questions.forEach((q, index) => {
+    if (answers[index] !== null) {
+      const selectedOption = q.options[answers[index]];
+      scores[selectedOption.type] += selectedOption.value;
+    }
+  });
+
+  const percentages = calculatePercentages(scores);
+
+  document.getElementById('quizForm').classList.add('d-none');
+  resultDiv.classList.remove('d-none');
+  
+  renderResults(scores, percentages);
+});
+
+// Floating button functionality
+floatingBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    floatingBtn.classList.remove('hidden');
+  } else {
+    floatingBtn.classList.add('hidden');
+  }
+});
+
+// Initialize
+renderQuestions();
+</script>
+
+</body>
+
+</html>
