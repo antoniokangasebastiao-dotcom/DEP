@@ -693,7 +693,7 @@ function formatResultsForWhatsApp(scores, dominant) {
 function shareWithWhatsApp(scores, dominant) {
   const message = formatResultsForWhatsApp(scores, dominant);
   const encodedMessage = encodeURIComponent(message);
- const whatsappUrl =  https://wa.me/946808316?text=${encodedMessage}`;
+ const whatsappUrl =  `https://wa.me/946808316?text=${encodedMessage}`;
   window.open(whatsappUrl, '_blank');
 }
 
