@@ -1156,11 +1156,10 @@ function setupShareModal(dominantLanguage, dominantPercentage) {
   
   // Create share message
   const shareMessage = `Descobri que minha principal linguagem do amor é ${dominantLanguage} (${dominantPercentage}%)! Faça o teste e descubra a sua também: ${shareLink.value}`;
-  
   // Set up share buttons
   document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareLink.value)}&quote=${encodeURIComponent(shareMessage)}`;
   document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage)}`;
-  document.getElementById('whatsappShare').href = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`;
+  document.getElementById('whatsappShare').href = `https://wa.me/+18002428478?text=${encodeURIComponent(shareMessage)}`;
   document.getElementById('linkedinShare').href = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareLink.value)}&title=${encodeURIComponent('Minha Linguagem do Amor')}&summary=${encodeURIComponent(shareMessage)}`;
   
   // Set up copy link button
@@ -1230,5 +1229,6 @@ renderQuestions();
 </body>
 
 </html>
+
 
 
