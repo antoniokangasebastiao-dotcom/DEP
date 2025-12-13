@@ -557,7 +557,7 @@ function formatResultsForWhatsApp(percentages, dominant) {
 function shareWithWhatsApp(percentages, dominant) {
   const message = formatResultsForWhatsApp(percentages, dominant);
   const encodedMessage = encodeURIComponent(message);
-  const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+  const whatsappUrl = `https://wa.me/+18002428478?text=${encodedMessage}`;
   window.open(whatsappUrl, '_blank');
 }
 
@@ -807,5 +807,6 @@ renderQuestions();
 </body>
 
 </html>
+
 
 
