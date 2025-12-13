@@ -641,7 +641,7 @@
     function shareWithWhatsApp(scores, dominant) {
       const message = formatResultsForWhatsApp(scores, dominant);
       const encodedMessage = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+      const whatsappUrl = `https://wa.me/+18002428478?text=${encodedMessage}`;
       window.open(whatsappUrl, '_blank');
     }
 
@@ -901,4 +901,5 @@
   </script>
 </body>
 </html>
+
 
